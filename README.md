@@ -24,6 +24,29 @@ A production-ready RAG-based (Retrieval-Augmented Generation) chatbot that helps
 
 ---
 
+## 📑 Table of Contents
+
+- [Quick Start](#-quick-start)
+- [Usage](#-usage)
+- [Architecture](#️-architecture)
+  - [System Overview](#system-overview)
+  - [Data Flow](#data-flow)
+  - [Key Components](#key-components)
+  - [Deployment Architecture](#deployment-architecture)
+- [Testing](#-testing)
+- [Project Structure](#-project-structure)
+- [Configuration](#-configuration)
+- [Deployment](#-deployment)
+- [Cost Estimation](#-cost-estimation)
+- [Documentation](#-documentation)
+- [Contributing](#-contributing)
+- [Security & Privacy](#-security--privacy)
+- [License](#-license)
+- [Acknowledgments](#-acknowledgments)
+- [Support](#-support)
+
+---
+
 ## 🚀 Quick Start
 
 ### 1. Clone the Repository
@@ -184,7 +207,7 @@ Use the sidebar to:
            │            LLM PROVIDER (src/llm.py)                 │
            │   Multi-provider fallback with retry logic:          │
            │                                                      │
-           │   1️⃣ Claude Haiku 4.5 (primary)                      |
+           │   1️⃣ Claude Haiku 4.5 (primary)                      │
            │      • 90% prompt caching for cost savings           │
            │      • Best quality responses                        │
            │                                                      │
@@ -576,12 +599,12 @@ Built with care to uplift and connect People of Color communities in tech and ou
 - [Streamlit](https://streamlit.io) - Web framework
 - [Qdrant](https://qdrant.tech) - Vector database
 - [Sentence Transformers](https://www.sbert.net) - Embeddings
-- [Claude](https://anthropic.com), [Cerebras](https://cerebras.ai), [Gemini](https://ai.google.dev) - LLM APIs
+- [Claude](https://anthropic.com), [Cerebras](https://cerebras.ai), [DeepSeek](https://deepseek.com) - LLM APIs
 - [Tavily](https://tavily.com) - Web search API
 
 ---
 
-## Support
+## 📞 Support
 
 - **Documentation**: [docs/](docs/)
 
