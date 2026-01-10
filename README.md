@@ -11,43 +11,43 @@ A production-ready RAG-based (Retrieval-Augmented Generation) chatbot that helps
 
 ---
 
-## ✨ Features
+## Features
 
-- **🤖 AI-Powered Search** - Multi-provider LLM with intelligent fallback (Claude Haiku → Cerebras → DeepSeek)
-- **🔍 Hybrid Search** - Combines semantic vector search with keyword matching for brand names
-- **🎉 Event Discovery** - Automatically discovers upcoming events from platform websites
-- **📊 Vector Database** - Qdrant (local + cloud) with sentence-transformers embeddings
-- **💬 Conversation Memory** - Context-aware responses with chat history (last 5 turns)
-- **🔒 Secure & Private** - All API keys from environment variables, no hardcoded secrets
-- **⚡ Fast & Free** - Uses free API tiers (Tavily, Cerebras) + Claude prompt caching (90% savings)
-- **🧪 Well-Tested** - 40 tests (100% passing), 89% coverage on core utilities
+- **AI-Powered Search** - Multi-provider LLM with intelligent fallback (Claude Haiku → Cerebras → DeepSeek)
+- **Hybrid Search** - Combines semantic vector search with keyword matching for brand names
+- **Event Discovery** - Automatically discovers upcoming events from platform websites
+- **Vector Database** - Qdrant (local + cloud) with sentence-transformers embeddings
+- **Conversation Memory** - Context-aware responses with chat history (last 5 turns)
+- **Secure & Private** - All API keys from environment variables, no hardcoded secrets
+- **Fast & Free** - Uses free API tiers (Tavily, Cerebras) + Claude prompt caching (90% savings)
+- **Well-Tested** - 40 tests (100% passing), 89% coverage on core utilities
 
 ---
 
-## 📑 Table of Contents
+## Table of Contents
 
-- [Quick Start](#-quick-start)
-- [Usage](#-usage)
-- [Architecture](#️-architecture)
+- [Quick Start](#quick-start)
+- [Usage](#usage)
+- [Architecture](#architecture)
   - [System Overview](#system-overview)
   - [Data Flow](#data-flow)
   - [Key Components](#key-components)
   - [Deployment Architecture](#deployment-architecture)
-- [Testing](#-testing)
-- [Project Structure](#-project-structure)
-- [Configuration](#-configuration)
-- [Deployment](#-deployment)
-- [Cost Estimation](#-cost-estimation)
-- [Documentation](#-documentation)
-- [Contributing](#-contributing)
-- [Security & Privacy](#-security--privacy)
-- [License](#-license)
-- [Acknowledgments](#-acknowledgments)
-- [Support](#-support)
+- [Testing](#testing)
+- [Project Structure](#project-structure)
+- [Configuration](#configuration)
+- [Deployment](#deployment)
+- [Cost Estimation](#cost-estimation)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [Security & Privacy](#security--privacy)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
+- [Support](#support)
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Clone the Repository
 
@@ -121,11 +121,11 @@ python scripts/smart_populate_events.py
 streamlit run app.py
 ```
 
-The app will open at `http://localhost:8501` 🎉
+The app will open at `http://localhost:8501`
 
 ---
 
-## 📖 Usage
+## Usage
 
 ### Ask Natural Language Questions
 
@@ -146,7 +146,7 @@ User: "What tech events are upcoming for Latinx professionals?"
 
 Bot: "Here are 3 upcoming events:
 
-🎉 Latinas in Tech Summit 2025
+Latinas in Tech Summit 2025
    📅 March 15, 2025
    📍 San Francisco, CA
    🔗 Register: https://latinasintechsummit.org
@@ -166,7 +166,7 @@ Use the sidebar to:
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ### System Overview
 
@@ -316,11 +316,11 @@ LLM Extraction → Validate & Store → Qdrant Events Collection
 - **Future-Only Events**: Filters out expired events automatically for better UX
 - **Local + Cloud**: Seamlessly switch between local development and cloud production
 
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for detailed technical documentation.
+For more details on the technical architecture, see the inline code documentation and comments in the source files.
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ### Run All Tests
 
@@ -344,68 +344,60 @@ See [TEST_SUMMARY.md](TEST_SUMMARY.md) for detailed test documentation.
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 poc_platforms_chatbot/
-├── app.py                          # Streamlit web app
+├── app.py                          # Streamlit web app (entry point)
 ├── config.py                       # Configuration & settings
 ├── requirements.txt                # Python dependencies
-├── README.md                       # This file
+├── README.md                       # Project documentation
+├── LICENSE                         # MIT License
+├── .env.example                    # Environment variable template
+├── .gitignore                      # Git ignore rules
 │
 ├── data/
-│   ├── platforms.json              # Platform database (50+ orgs)
-│   ├── url_updates.json            # URL enrichment tracking
-│   ├── pending_submissions.json    # Intake queue
-│   └── rejected_submissions.json   # Rejection tracking
+│   └── platforms.json              # Platform database (48 platforms)
 │
 ├── src/
-│   ├── chatbot.py                  # Main chatbot logic
+│   ├── chatbot.py                  # Main chatbot orchestration
 │   ├── llm.py                      # Multi-provider LLM wrapper
-│   ├── retriever.py                # RAG retrieval
-│   ├── embeddings.py               # Embedding model
-│   ├── vectordb_qdrant.py          # Qdrant vector DB
+│   ├── retriever.py                # Hybrid search (RAG retrieval)
+│   ├── embeddings.py               # Embedding model wrapper
+│   ├── embedding_singleton.py      # Singleton for embeddings
+│   ├── conversation.py             # Conversation memory
+│   ├── vectordb_qdrant.py          # Qdrant vector DB (local + cloud)
 │   │
 │   ├── events/
-│   │   ├── event_store.py          # Event storage (Qdrant)
-│   │   ├── base_extractor.py       # Shared utilities (89% coverage)
-│   │   ├── llm_extractor.py        # LLM event extraction
+│   │   ├── event_store.py          # Event vector storage
+│   │   ├── base_extractor.py       # Shared event utilities
+│   │   ├── llm_extractor.py        # LLM-based event extraction
 │   │   ├── eventbrite_scraper.py   # Eventbrite scraping
-│   │   ├── rss_fetcher.py          # RSS/Atom parsing
-│   │   └── smart_event_finder.py   # Smart URL discovery
+│   │   ├── rss_fetcher.py          # RSS/Atom feed parsing
+│   │   └── smart_event_finder.py   # Smart event discovery
 │   │
 │   └── agents/
-│       └── event_finder.py         # EventFinder agent (web search + LLM)
+│       └── event_finder.py         # EventFinder agent
 │
-├── scripts/
-│   ├── build_index.py              # Build platform vector index
-│   ├── populate_events.py          # Populate events with EventFinder
-│   ├── cleanup_inactive_platforms.py  # Remove inactive platforms
-│   ├── test_queries.py             # Test retrieval quality
-│   └── test_chatbot_manual.py      # Manual chatbot testing
-│
-├── tests/
-│   ├── unit/                       # Fast unit tests
-│   │   ├── test_base_extractor.py  # 89% coverage
-│   │   └── test_llm_parsing.py
-│   ├── integration/                # Real API tests
-│   │   ├── test_llm_integration.py
-│   │   ├── test_event_store.py
-│   │   └── test_agent_event_finder.py
-│   └── fixtures/
-│       └── llm_responses.py        # Cached LLM responses
-│
-└── docs/
-    ├── ARCHITECTURE.md             # Technical deep dive
-    ├── DATABASE.md                 # Data schema
-    ├── CHATBOT.md                  # UX patterns
-    ├── INFRASTRUCTURE.md           # Deployment guide
-    └── CLAUDE.md                   # Project overview
+└── scripts/
+    ├── build_index.py              # Build platform vector index
+    ├── smart_populate_events.py    # Populate events collection
+    ├── cleanup_inactive_platforms.py
+    ├── test_queries.py
+    ├── test_rag_pipeline.py
+    ├── update_single_org_events.py
+    └── verify_and_update_urls.py
 ```
+
+**Note**: The following directories are excluded from the repository (see `.gitignore`):
+- `docs/` - Documentation (kept locally for development)
+- `tests/` - Test suite (kept locally for development)
+- `scripts/archive/` and `scripts/.deprecated/` - Archived scripts
+- `data/url_updates.json`, `data/pending_submissions.json`, `data/rejected_submissions.json` - Local tracking files
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -445,7 +437,7 @@ MAX_EVENTS_PER_PLATFORM = 100        # Max events per platform
 
 ---
 
-## 🚢 Deployment
+## Deployment
 
 ### Local Development
 
@@ -496,7 +488,7 @@ See [DEPLOY_STREAMLIT.md](DEPLOY_STREAMLIT.md) for comprehensive deployment docu
 
 ---
 
-## 💰 Cost Estimation
+## Cost Estimation
 
 ### Free Tier MVP (<1000 users/month)
 
@@ -506,7 +498,7 @@ See [DEPLOY_STREAMLIT.md](DEPLOY_STREAMLIT.md) for comprehensive deployment docu
 | **Qdrant Cloud** | 1GB storage | **$0** |
 | **Cerebras** | 30M tokens/month | **$0** |
 | **Tavily** | 1000 searches/month | **$0** |
-| **Total** | | **$0/month** ✨ |
+| **Total** | | **$0/month** |
 
 ### Production with Claude Haiku (<10K queries/month)
 
@@ -533,20 +525,18 @@ See [DEPLOY_STREAMLIT.md](DEPLOY_STREAMLIT.md) for comprehensive deployment docu
 
 ---
 
-## 📚 Documentation
+## Documentation
 
-- **[CLAUDE.md](CLAUDE.md)** - Project overview and quick start
-- **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** - Technical architecture deep dive
-- **[docs/DATABASE.md](docs/DATABASE.md)** - Platform data schema and examples
-- **[docs/CHATBOT.md](docs/CHATBOT.md)** - Chatbot UX patterns and prompts
-- **[docs/INFRASTRUCTURE.md](docs/INFRASTRUCTURE.md)** - Deployment options and hosting
-- **[src/events/README.md](src/events/README.md)** - Event extraction strategies guide
-- **[src/agents/README.md](src/agents/README.md)** - EventFinder agent documentation
-- **[TEST_SUMMARY.md](TEST_SUMMARY.md)** - Testing strategy and coverage
+- **[README.md](README.md)** - This file (getting started, architecture, deployment)
+- **[CLAUDE.md](CLAUDE.md)** - Project overview and development guidelines
+- **[DEPLOYMENT_QUICK_START.md](DEPLOYMENT_QUICK_START.md)** - 5-step deployment guide
+- **[DEPLOY_STREAMLIT.md](DEPLOY_STREAMLIT.md)** - Comprehensive deployment documentation
+- **[GITHUB_CHECKLIST.md](GITHUB_CHECKLIST.md)** - Pre-push security checklist
+- **Source code** - Inline documentation in all modules
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 ### Add a New Platform
 
@@ -575,25 +565,25 @@ python -m py_compile app.py src/*.py
 
 ---
 
-## 🔐 Security & Privacy
+## Security & Privacy
 
-- ✅ **No hardcoded secrets** - All API keys from environment variables
-- ✅ **Input validation** - Query length limits (max 1000 chars)
-- ✅ **Secure dependencies** - All from trusted PyPI sources
-- ✅ **No data collection** - No user tracking or analytics
-- ✅ **Local-first** - Runs entirely on your machine or private server
+- **No hardcoded secrets** - All API keys from environment variables
+- **Input validation** - Query length limits (max 1000 chars)
+- **Secure dependencies** - All from trusted PyPI sources
+- **No data collection** - No user tracking or analytics
+- **Local-first** - Runs entirely on your machine or private server
 
 ---
 
-## 📄 License
+## License
 
 This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
-Built with care to uplift and connect People of Color communities in tech and outdoor/travel spaces.
+Built with care to uplift and connect communities of color in tech and outdoor/travel spaces.
 
 **Powered by**:
 - [Streamlit](https://streamlit.io) - Web framework
@@ -604,9 +594,11 @@ Built with care to uplift and connect People of Color communities in tech and ou
 
 ---
 
-## 📞 Support
+## Support
 
-- **Documentation**: [docs/](docs/)
+- **Issues**: [GitHub Issues](https://github.com/yourusername/poc-platforms-chatbot/issues)
+- **Documentation**: See files listed in [Documentation](#documentation) section above
+- **Questions**: Open a discussion on GitHub or review inline code comments
 
 ---
 
