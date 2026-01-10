@@ -92,11 +92,17 @@ git push origin main
 ├── requirements.txt         # Dependencies
 ├── data/platforms.json      # 48 platforms (source of truth)
 ├── src/
-│   ├── chatbot.py          # RAG orchestration
-│   ├── retriever.py        # Hybrid search
-│   ├── llm.py              # Multi-provider LLM
-│   ├── vectordb_qdrant.py  # Vector DB wrapper
-│   └── events/             # Event discovery system
+│   ├── core/               # Core RAG components
+│   │   ├── chatbot.py     # RAG orchestration
+│   │   ├── retriever.py   # Hybrid search
+│   │   └── conversation.py # Memory management
+│   ├── infrastructure/     # Infrastructure services
+│   │   ├── llm.py         # Multi-provider LLM
+│   │   ├── vectordb.py    # Vector DB wrapper
+│   │   └── embeddings.py  # Embedding utilities
+│   └── events/            # Event discovery system
+│       ├── event_store.py
+│       └── smart_event_finder.py
 └── scripts/
     ├── build_index.py      # Index platforms
     └── smart_populate_events.py  # Discover events
@@ -147,9 +153,9 @@ QDRANT_API_KEY=...
 │  Streamlit  │  User asks question
 └──────┬──────┘
        │
-┌──────▼──────────────────┐
-│  Chatbot (src/chatbot)  │  Routes to platform/event search
-└──────┬──────────────────┘
+┌──────▼────────────────────────┐
+│  Chatbot (src/core/chatbot)   │  Routes to platform/event search
+└──────┬────────────────────────┘
        │
    ┌───┴────┐
    │        │
