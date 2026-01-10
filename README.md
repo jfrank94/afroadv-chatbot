@@ -6,8 +6,7 @@ A production-ready RAG-based (Retrieval-Augmented Generation) chatbot that helps
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Streamlit](https://img.shields.io/badge/streamlit-1.28+-red.svg)](https://streamlit.io)
-[![Tests](https://img.shields.io/badge/tests-40%20passing-success.svg)](TEST_SUMMARY.md)
-[![Coverage](https://img.shields.io/badge/coverage-89%25%20core-green.svg)](TEST_SUMMARY.md)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ---
 
@@ -20,7 +19,6 @@ A production-ready RAG-based (Retrieval-Augmented Generation) chatbot that helps
 - **Conversation Memory** - Context-aware responses with chat history (last 5 turns)
 - **Secure & Private** - All API keys from environment variables, no hardcoded secrets
 - **Fast & Free** - Uses free API tiers (Tavily, Cerebras) + Claude prompt caching (90% savings)
-- **Well-Tested** - 40 tests (100% passing), 89% coverage on core utilities
 
 ---
 
@@ -33,7 +31,6 @@ A production-ready RAG-based (Retrieval-Augmented Generation) chatbot that helps
   - [Data Flow](#data-flow)
   - [Key Components](#key-components)
   - [Deployment Architecture](#deployment-architecture)
-- [Testing](#testing)
 - [Project Structure](#project-structure)
 - [Configuration](#configuration)
 - [Deployment](#deployment)
@@ -320,30 +317,6 @@ For more details on the technical architecture, see the inline code documentatio
 
 ---
 
-## Testing
-
-### Run All Tests
-
-```bash
-# All tests (40 total)
-pytest tests/ -v
-
-# Just unit tests (fast, no API calls)
-pytest tests/unit/ -v
-
-# Integration tests (requires API keys in .env)
-pytest tests/integration/ -v -m integration
-
-# With coverage
-pytest tests/unit/ --cov=src --cov-report=term-missing --cov-report=html
-```
-
-**Test Status**: 40/40 passing (100%), 89% coverage on core utilities
-
-See [TEST_SUMMARY.md](TEST_SUMMARY.md) for detailed test documentation.
-
----
-
 ## Project Structure
 
 ```
@@ -389,11 +362,10 @@ poc_platforms_chatbot/
     └── verify_and_update_urls.py
 ```
 
-**Note**: The following directories are excluded from the repository (see `.gitignore`):
-- `docs/` - Documentation (kept locally for development)
-- `tests/` - Test suite (kept locally for development)
-- `scripts/archive/` and `scripts/.deprecated/` - Archived scripts
-- `data/url_updates.json`, `data/pending_submissions.json`, `data/rejected_submissions.json` - Local tracking files
+**Note**: Some development files are excluded from the repository (see `.gitignore`):
+- Test suite (`tests/`) - For local development and CI/CD
+- Archived scripts (`scripts/archive/`, `scripts/.deprecated/`)
+- Local tracking files (`data/url_updates.json`, etc.)
 
 ---
 
@@ -552,15 +524,17 @@ Found a bug or have a suggestion? [Open an issue](https://github.com/yourusernam
 ### Development Setup
 
 ```bash
-# Install dev dependencies
+# Install dependencies
 pip install -r requirements.txt
-pip install pytest pytest-cov
-
-# Run tests
-pytest tests/ -v
 
 # Check code quality
 python -m py_compile app.py src/*.py
+
+# Build vector index
+python scripts/build_index.py
+
+# Test the chatbot
+streamlit run app.py
 ```
 
 ---
