@@ -82,8 +82,6 @@ git push origin main
 # Deploy!
 ```
 
-**Detailed guide**: [DEPLOYMENT_QUICK_START.md](DEPLOYMENT_QUICK_START.md)
-
 ---
 
 ## Project Structure
