@@ -1,0 +1,949 @@
+[
+  {
+    "id": "tech_pocit_people_of_color_in_tech_001",
+    "name": "POCIT (People of Color in Tech)",
+    "type": "Tech",
+    "category": "Media & Jobs",
+    "focus_area": "General PoC in Tech",
+    "description": "World's leading platform for underrepresented in tech to share, grow, and get hired. Provides content, community, and career opportunities.",
+    "website": "peopleofcolorintech.com",
+    "founded": "2016",
+    "community_size": "5,000+ companies supported",
+    "key_programs": "Job board (pocitjobs.com), articles, podcast, career resources",
+    "geographic_focus": "Global",
+    "tags": [
+      "poc tech",
+      "diversity tech",
+      "job board",
+      "tech careers",
+      "underrepresented"
+    ]
+  },
+  {
+    "id": "tech_blacks_in_technology_bit_002",
+    "name": "Blacks In Technology (BIT)",
+    "type": "Tech",
+    "category": "Community & Nonprofit",
+    "focus_area": "Black Tech Professionals",
+    "description": "Largest community of Black people in the technology industry. 'Stomping the Divide' through training, education, networking, and mentorship.",
+    "website": "https://www.blacksintechnology.net/",
+    "founded": "2008/2012",
+    "community_size": "40,000+ members across 20 countries",
+    "key_programs": "BITCON annual conference, Slack community, LinkedIn group, job board, local chapters",
+    "geographic_focus": "Global (US-based)",
+    "tags": [
+      "black tech",
+      "african american",
+      "networking",
+      "conference",
+      "career development"
+    ]
+  },
+  {
+    "id": "tech_masakhane_003",
+    "name": "Masakhane",
+    "type": "Tech",
+    "category": "Research Community",
+    "focus_area": "African NLP/ML",
+    "description": "Grassroots organization for NLP research in African languages. 'We Build Together' - developing open-source ML tools for African languages.",
+    "website": "https://www.masakhane.io/",
+    "founded": "2019",
+    "community_size": "1,000+ participants from 30+ African countries",
+    "key_programs": "Machine translation models, NER, speech recognition, Google Colab notebooks, weekly meetings, Slack workspace",
+    "geographic_focus": "Africa-focused, Global participation",
+    "tags": [
+      "nlp",
+      "machine learning",
+      "african languages",
+      "machine translation",
+      "open source",
+      "research"
+    ]
+  },
+  {
+    "id": "tech_techqueria_004",
+    "name": "Techqueria",
+    "type": "Tech",
+    "category": "Community & Nonprofit",
+    "focus_area": "Latinx in Tech",
+    "description": "Largest global community of Latinx professionals in tech. Provides mentorship, career development, and DEI advocacy.",
+    "website": "techqueria.org",
+    "founded": "2015",
+    "community_size": "19,000+ members, 10,000+ Slack users",
+    "key_programs": "Slack community, job board, local chapters, annual summit, mentorship programs",
+    "geographic_focus": "US-focused with global reach",
+    "tags": [
+      "latinx",
+      "hispanic",
+      "latino",
+      "latina",
+      "tech community",
+      "diversity",
+      "mentorship"
+    ]
+  },
+  {
+    "id": "tech_devcolor_005",
+    "name": "/dev/color",
+    "type": "Tech",
+    "category": "Nonprofit",
+    "focus_area": "Black Software Engineers",
+    "description": "Nonprofit focused on maximizing the impact of Black software engineers through career development and networking.",
+    "website": "devcolor.org",
+    "founded": "2015",
+    "community_size": "Not disclosed",
+    "key_programs": "A* Program for networking and career mapping, events, meetings, retreats",
+    "geographic_focus": "United States",
+    "tags": [
+      "black engineers",
+      "software development",
+      "career advancement",
+      "networking"
+    ]
+  },
+  {
+    "id": "tech_black_professional_in_tech_network_bptn_006",
+    "name": "Black Professional in Tech Network (BPTN)",
+    "type": "Tech",
+    "category": "Community & Platform",
+    "focus_area": "Black Tech Professionals",
+    "description": "Global network connecting large tech companies with Black tech professionals through employment opportunities and resources.",
+    "website": "https://www.bptn.com",
+    "founded": "2018",
+    "community_size": "60,000+ members worldwide",
+    "key_programs": "Obsidi platform, recruitment services, mentorship, educational resources, awards ceremony",
+    "geographic_focus": "North America, Global expansion",
+    "tags": [
+      "black professionals",
+      "recruitment",
+      "networking",
+      "tech careers"
+    ]
+  },
+  {
+    "id": "tech_aises_007",
+    "name": "AISES",
+    "type": "Tech",
+    "category": "Nonprofit",
+    "focus_area": "Indigenous in STEM",
+    "description": "American Indian Science and Engineering Society - advancing Indigenous peoples in STEM studies and careers.",
+    "website": "aises.org",
+    "founded": "1977",
+    "community_size": "13,000+ members",
+    "key_programs": "Scholarships, national conference, career development, internships, STEM curriculum support",
+    "geographic_focus": "North America, Pacific Islands",
+    "tags": [
+      "native american",
+      "indigenous",
+      "stem",
+      "engineering",
+      "science",
+      "scholarships"
+    ]
+  },
+  {
+    "id": "tech_natives_in_tech_008",
+    "name": "Natives in Tech",
+    "type": "Tech",
+    "category": "Community & Nonprofit",
+    "focus_area": "Native Americans in Tech",
+    "description": "Nonprofit providing spaces for American Indian tech professionals to network and build open-source technology.",
+    "website": "https://peopleofcolorintech.com/",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Annual conference, open-source projects, community networking",
+    "geographic_focus": "United States",
+    "tags": [
+      "native american",
+      "indigenous tech",
+      "open source",
+      "networking"
+    ]
+  },
+  {
+    "id": "tech_code2040_009",
+    "name": "Code2040",
+    "type": "Tech",
+    "category": "Nonprofit",
+    "focus_area": "Black & Latinx in Tech",
+    "description": "Career advancement platform for Black, Latinx, and Native American students and professionals in tech.",
+    "website": "https://www.code2040.org",
+    "founded": "2012",
+    "community_size": "Thousands of alumni",
+    "key_programs": "Fellows Program, Early Career Accelerator, mentorship, community building",
+    "geographic_focus": "United States",
+    "tags": [
+      "black",
+      "latinx",
+      "native american",
+      "career development",
+      "fellows",
+      "mentorship"
+    ]
+  },
+  {
+    "id": "tech_latinas_in_tech_010",
+    "name": "Latinas in Tech",
+    "type": "Tech",
+    "category": "Nonprofit",
+    "focus_area": "Latina Women in Tech",
+    "description": "Nonprofit connecting, supporting, and empowering Latina women in technology through training and mentorship.",
+    "website": "latinasintech.org",
+    "founded": "2014",
+    "community_size": "20,000+ members",
+    "key_programs": "Professional development, recruiting partnerships, mentorship, annual summit, 20+ global chapters",
+    "geographic_focus": "Global",
+    "tags": [
+      "latina",
+      "women in tech",
+      "mentorship",
+      "leadership",
+      "networking"
+    ]
+  },
+  {
+    "id": "tech_black_women_talk_tech_011",
+    "name": "Black Women Talk Tech",
+    "type": "Tech",
+    "category": "Community & Conference",
+    "focus_area": "Black Women in Tech",
+    "description": "Annual conference and community for Black women entrepreneurs and professionals in tech.",
+    "website": "blackwomentalktech.com",
+    "founded": "2017",
+    "community_size": "Not disclosed",
+    "key_programs": "Annual conference, 10 national/international mastermind groups, networking",
+    "geographic_focus": "United States",
+    "tags": [
+      "black women",
+      "entrepreneurship",
+      "conference",
+      "networking",
+      "founders"
+    ]
+  },
+  {
+    "id": "tech_black_girls_code_012",
+    "name": "Black Girls CODE",
+    "type": "Tech",
+    "category": "Nonprofit",
+    "focus_area": "Young Black Girls in Tech",
+    "description": "Nonprofit introducing programming and technology to young girls of color.",
+    "website": "https://www.wearebgc.org/",
+    "founded": "2011",
+    "community_size": "30,000+ students reached",
+    "key_programs": "Coding workshops, summer camps, hackathons, mentorship",
+    "geographic_focus": "United States",
+    "tags": [
+      "girls",
+      "coding",
+      "youth",
+      "education",
+      "programming",
+      "workshops"
+    ]
+  },
+  {
+    "id": "tech_afrotech_013",
+    "name": "AfroTech",
+    "type": "Tech",
+    "category": "Media & Conference",
+    "focus_area": "Black Tech Professionals",
+    "description": "Multicultural tech conference and media platform highlighting Black tech innovators and their stories.",
+    "website": "afrotech.com",
+    "founded": "2016",
+    "community_size": "Thousands of attendees annually",
+    "key_programs": "Annual conference, media platform, job board, networking events",
+    "geographic_focus": "United States",
+    "tags": [
+      "black tech",
+      "conference",
+      "media",
+      "innovation",
+      "entrepreneurship"
+    ]
+  },
+  {
+    "id": "tech_we_build_black_014",
+    "name": "We Build Black",
+    "type": "Tech",
+    "category": "Community",
+    "focus_area": "Black Software Engineers",
+    "description": "Tech community for Black software engineers to share ideas, work on code, and discuss the industry.",
+    "website": "https://www.webuildblack.com",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Weekly meetups, Slack conversations, collaborative coding",
+    "geographic_focus": "United States",
+    "tags": [
+      "black engineers",
+      "coding",
+      "community",
+      "software development"
+    ]
+  },
+  {
+    "id": "tech_black_code_collective_015",
+    "name": "Black Code Collective",
+    "type": "Tech",
+    "category": "Community",
+    "focus_area": "Black Developers",
+    "description": "Community for Black developers to help each other grow tech skills and level-up careers.",
+    "website": "blackcodecollective.com",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Community support, knowledge sharing, career development",
+    "geographic_focus": "United States",
+    "tags": [
+      "black developers",
+      "coding",
+      "community",
+      "skill development"
+    ]
+  },
+  {
+    "id": "tech_valence_016",
+    "name": "Valence",
+    "type": "Tech",
+    "category": "Platform",
+    "focus_area": "Black Professionals",
+    "description": "Recruitment platform connecting, empowering, and showcasing Black professionals (acquired by Greenwood).",
+    "website": "https://www.valence.co",
+    "founded": "2019",
+    "community_size": "Not disclosed",
+    "key_programs": "Recruitment platform, career opportunities, networking",
+    "geographic_focus": "United States",
+    "tags": [
+      "black professionals",
+      "recruitment",
+      "career opportunities"
+    ]
+  },
+  {
+    "id": "tech_shpe_017",
+    "name": "SHPE",
+    "type": "Tech",
+    "category": "Nonprofit",
+    "focus_area": "Hispanic Engineers",
+    "description": "Society of Hispanic Professional Engineers - supporting Hispanics in STEM for nearly 50 years.",
+    "website": "shpe.org",
+    "founded": "1974",
+    "community_size": "13,000+ members",
+    "key_programs": "Mentorship, programming, annual conference, scholarships, career development",
+    "geographic_focus": "United States",
+    "tags": [
+      "hispanic",
+      "latino",
+      "engineering",
+      "stem",
+      "professional development"
+    ]
+  },
+  {
+    "id": "tech_kapor_center_018",
+    "name": "Kapor Center",
+    "type": "Tech",
+    "category": "Foundation",
+    "focus_area": "Tech Diversity Research",
+    "description": "Nonprofit expanding access and equity in tech through research, advocacy, and community building.",
+    "website": "https://www.kaporcenter.org",
+    "founded": "2015",
+    "community_size": "Not disclosed",
+    "key_programs": "Research reports, policy advocacy, Leaky Tech Pipeline research, Native Tech ecosystem reports",
+    "geographic_focus": "United States",
+    "tags": [
+      "diversity research",
+      "tech equity",
+      "policy",
+      "advocacy"
+    ]
+  },
+  {
+    "id": "tech_per_scholas_019",
+    "name": "Per Scholas",
+    "type": "Tech",
+    "category": "Nonprofit",
+    "focus_area": "Diverse Tech Training",
+    "description": "Nonprofit providing tuition-free tech training to underrepresented communities. 85% of learners are PoC.",
+    "website": "perscholas.org",
+    "founded": "1995",
+    "community_size": "20,000+ alumni",
+    "key_programs": "Tech training programs, Diverse by Design initiative, career placement",
+    "geographic_focus": "United States",
+    "tags": [
+      "tech training",
+      "free education",
+      "career development",
+      "diversity"
+    ]
+  },
+  {
+    "id": "tech_noirefy_020",
+    "name": "Noirefy",
+    "type": "Tech",
+    "category": "Platform",
+    "focus_area": "Underrepresented Professionals",
+    "description": "Platform connecting underrepresented professionals with high-growth startups and Fortune 500 companies.",
+    "website": "https://letsdowhatmatters.com/inclusive-talent-resources/",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Job matching, company connections, career opportunities",
+    "geographic_focus": "United States",
+    "tags": [
+      "diverse hiring",
+      "job matching",
+      "startups",
+      "fortune 500"
+    ]
+  },
+  {
+    "id": "tech_girls_who_code_021",
+    "name": "Girls Who Code",
+    "type": "Tech",
+    "category": "Nonprofit",
+    "focus_area": "Girls in Tech",
+    "description": "Nonprofit dedicated to closing the gender gap in tech. Founded by Reshma Saujani.",
+    "website": "girlswhocode.com",
+    "founded": "2012",
+    "community_size": "450,000+ girls reached globally",
+    "key_programs": "Summer programs, clubs, college programs, alumni support",
+    "geographic_focus": "Global",
+    "tags": [
+      "girls",
+      "women in tech",
+      "coding",
+      "education",
+      "gender gap"
+    ]
+  },
+  {
+    "id": "tech_ai4all_022",
+    "name": "AI4ALL",
+    "type": "Tech",
+    "category": "Nonprofit",
+    "focus_area": "Diverse AI Education",
+    "description": "Nonprofit increasing diversity and inclusion in AI education and careers.",
+    "website": "ai-4-all.org",
+    "founded": "2017",
+    "community_size": "Not disclosed",
+    "key_programs": "Summer programs, open learning resources, college pathways program",
+    "geographic_focus": "United States",
+    "tags": [
+      "ai",
+      "artificial intelligence",
+      "diversity",
+      "education",
+      "youth"
+    ]
+  },
+  {
+    "id": "tech_latino_business_action_network_lban_023",
+    "name": "Latino Business Action Network (LBAN)",
+    "type": "Tech",
+    "category": "Nonprofit",
+    "focus_area": "Latino Entrepreneurs",
+    "description": "Empowering Latino entrepreneurs through research, education, and startup accelerator programs.",
+    "website": "https://www.lban.us",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Startup accelerator, Stanford Latino Entrepreneurship Initiative, research",
+    "geographic_focus": "United States",
+    "tags": [
+      "latino",
+      "entrepreneurship",
+      "startups",
+      "business",
+      "accelerator"
+    ]
+  },
+  {
+    "id": "tech_latinx_startup_alliance_024",
+    "name": "Latinx Startup Alliance",
+    "type": "Tech",
+    "category": "Community",
+    "focus_area": "Latinx Tech Founders",
+    "description": "Encouraging and cultivating Latinx-led tech startup ventures through networking and mentorship.",
+    "website": "https://www.colorstack.org/",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Founder support network, mentors, advisors, partners",
+    "geographic_focus": "United States",
+    "tags": [
+      "latinx",
+      "startups",
+      "founders",
+      "entrepreneurship",
+      "mentorship"
+    ]
+  },
+  {
+    "id": "outdoor_outdoor_afro_001",
+    "name": "Outdoor Afro",
+    "type": "Outdoor/Travel",
+    "category": "Nonprofit",
+    "focus_area": "Black Outdoor Recreation",
+    "description": "National network celebrating and inspiring Black connections and leadership in nature through outdoor recreation.",
+    "website": "outdoorafro.org",
+    "founded": "2009",
+    "community_size": "100+ volunteer leaders in 60 cities, 60,000+ participants annually",
+    "key_programs": "Hiking, kayaking, birding, fishing, swimming, leadership training (OALT), volunteer programs",
+    "geographic_focus": "United States",
+    "tags": [
+      "black outdoors",
+      "hiking",
+      "nature",
+      "recreation",
+      "leadership",
+      "conservation"
+    ]
+  },
+  {
+    "id": "outdoor_travel_noire_002",
+    "name": "Travel Noire",
+    "type": "Outdoor/Travel",
+    "category": "Media & Community",
+    "focus_area": "Black Travel",
+    "description": "Media platform and community for Black travelers, featuring destinations, guides, and travel resources.",
+    "website": "travelnoire.com",
+    "founded": "2013",
+    "community_size": "350,000+ Instagram followers",
+    "key_programs": "Travel guides, destination features, newsletter, travel tips, content creation",
+    "geographic_focus": "Global",
+    "tags": [
+      "black travel",
+      "travel media",
+      "destinations",
+      "vacation",
+      "tourism"
+    ]
+  },
+  {
+    "id": "outdoor_nomadness_travel_tribe_003",
+    "name": "Nomadness Travel Tribe",
+    "type": "Outdoor/Travel",
+    "category": "Community",
+    "focus_area": "BIPOC Travelers",
+    "description": "BIPOC travel lifestyle brand and community - 'Digital Green Book' for travelers of color. Founded by Evita Robinson.",
+    "website": "https://nomadnesstraveltribe.com",
+    "founded": "2011",
+    "community_size": "20,000+ members, 100,000+ passport stamps",
+    "key_programs": "Online community, group trips, Audacity Fest, meetups worldwide",
+    "geographic_focus": "Global",
+    "tags": [
+      "bipoc travel",
+      "travel community",
+      "group trips",
+      "digital nomad"
+    ]
+  },
+  {
+    "id": "outdoor_melanin_base_camp_004",
+    "name": "Melanin Base Camp",
+    "type": "Outdoor/Travel",
+    "category": "Media & Coalition",
+    "focus_area": "BIPOC Outdoor Sports",
+    "description": "Storytelling platform promoting diversity in outdoor adventure sports for Black, Latinx, Asian, Indigenous and LGBTQ+ adventurers.",
+    "website": "https://www.melaninbasecamp.com",
+    "founded": "2016",
+    "community_size": "86,000+ Instagram followers, 50,000+ monthly blog viewers",
+    "key_programs": "Blog content, Diversify Outdoors coalition, #melaninbasecamp hashtag campaign",
+    "geographic_focus": "United States, Global",
+    "tags": [
+      "outdoor sports",
+      "adventure",
+      "diversity",
+      "climbing",
+      "skydiving",
+      "hiking"
+    ]
+  },
+  {
+    "id": "outdoor_latino_outdoors_005",
+    "name": "Latino Outdoors",
+    "type": "Outdoor/Travel",
+    "category": "Nonprofit",
+    "focus_area": "Latino Outdoor Recreation",
+    "description": "Latinx-led organization engaging Latino communities in outdoor recreation, embracing cultura y familia.",
+    "website": "latinooutdoors.org",
+    "founded": "2013",
+    "community_size": "200+ volunteers, 38,000+ participants, 122,000+ social followers",
+    "key_programs": "Vamos Outdoors (hiking, camping, birding), Yo Cuento Outdoors storytelling, Jobs+ board, leadership development",
+    "geographic_focus": "United States",
+    "tags": [
+      "latino",
+      "hispanic",
+      "outdoor recreation",
+      "familia",
+      "conservation",
+      "hiking"
+    ]
+  },
+  {
+    "id": "outdoor_diversify_outdoors_006",
+    "name": "Diversify Outdoors",
+    "type": "Outdoor/Travel",
+    "category": "Coalition",
+    "focus_area": "BIPOC & LGBTQ+ Outdoors",
+    "description": "Coalition of digital influencers, entrepreneurs and consultants advocating for equitable and inclusive outdoors.",
+    "website": "https://www.diversifyoutdoors.com",
+    "founded": "2018",
+    "community_size": "Combined reach of 200,000+ on Instagram",
+    "key_programs": "Coalition building, Outdoor CEO Diversity Pledge, social media campaigns, resource sharing",
+    "geographic_focus": "United States",
+    "tags": [
+      "diversity",
+      "inclusion",
+      "outdoor advocacy",
+      "coalition",
+      "equity"
+    ]
+  },
+  {
+    "id": "outdoor_black_abroad_007",
+    "name": "Black & Abroad",
+    "type": "Outdoor/Travel",
+    "category": "Media & Collective",
+    "focus_area": "Black Travel",
+    "description": "Cultural collective dedicated to redefining world experiences for the modern Black traveler.",
+    "website": "https://www.blackandabroad.com",
+    "founded": "2015",
+    "community_size": "Not disclosed",
+    "key_programs": "Travel content, merchandise, experiences, travel planning resources",
+    "geographic_focus": "Global",
+    "tags": [
+      "black travel",
+      "travel collective",
+      "culture",
+      "merchandise"
+    ]
+  },
+  {
+    "id": "outdoor_soul_trak_outdoors_008",
+    "name": "Soul Trak Outdoors",
+    "type": "Outdoor/Travel",
+    "category": "Nonprofit",
+    "focus_area": "Urban Communities of Color",
+    "description": "Connecting urban communities of color to green spaces through hiking, climbing, camping, and education.",
+    "website": "soultrak.com",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Youth programs, adult programs, student ambassador program (Howard University), documentary viewings",
+    "geographic_focus": "United States",
+    "tags": [
+      "urban outdoors",
+      "hiking",
+      "youth programs",
+      "green spaces"
+    ]
+  },
+  {
+    "id": "outdoor_blackpackers_009",
+    "name": "Blackpackers",
+    "type": "Outdoor/Travel",
+    "category": "Organization",
+    "focus_area": "Black Outdoor Recreation",
+    "description": "Colorado-based organization creating economic equity in outdoor recreation and career pipelines.",
+    "website": "blackpackers.org",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Career pipeline programs, gear access, outdoor education",
+    "geographic_focus": "Colorado, United States",
+    "tags": [
+      "black outdoors",
+      "career development",
+      "economic equity",
+      "gear access"
+    ]
+  },
+  {
+    "id": "outdoor_vibe_tribe_adventures_010",
+    "name": "Vibe Tribe Adventures",
+    "type": "Outdoor/Travel",
+    "category": "Organization",
+    "focus_area": "BIPOC Outdoor Recreation",
+    "description": "Denver-based organization leading outdoor recreation programs for BIPOC communities.",
+    "website": "https://vibetribeadventures.org/",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Guided outdoor programs, community events, gear rental",
+    "geographic_focus": "Colorado, United States",
+    "tags": [
+      "bipoc outdoors",
+      "denver",
+      "guided trips",
+      "community"
+    ]
+  },
+  {
+    "id": "outdoor_indigenous_women_hike_011",
+    "name": "Indigenous Women Hike",
+    "type": "Outdoor/Travel",
+    "category": "Community",
+    "focus_area": "Indigenous Women Outdoors",
+    "description": "Healing through inherent connection to the land for Indigenous women.",
+    "website": "https://www.nativewomenswilderness.org/mmiw",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Hiking events, healing journeys, community building",
+    "geographic_focus": "United States",
+    "tags": [
+      "indigenous",
+      "native american",
+      "women",
+      "hiking",
+      "healing"
+    ]
+  },
+  {
+    "id": "outdoor_native_womens_wilderness_012",
+    "name": "Native Womens Wilderness",
+    "type": "Outdoor/Travel",
+    "category": "Community",
+    "focus_area": "Native Women Outdoors",
+    "description": "Inspiring and raising voices of Native Women in the outdoor realm, encouraging healthy wilderness lifestyle.",
+    "website": "https://www.nativewomenswilderness.org",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Outdoor events, storytelling, community building, wilderness education",
+    "geographic_focus": "United States",
+    "tags": [
+      "native women",
+      "wilderness",
+      "outdoors",
+      "indigenous"
+    ]
+  },
+  {
+    "id": "outdoor_natives_outdoors_013",
+    "name": "Natives Outdoors",
+    "type": "Outdoor/Travel",
+    "category": "Brand & Community",
+    "focus_area": "Indigenous Outdoor Culture",
+    "description": "Empowering indigenous communities through products and storytelling for a sustainable world.",
+    "website": "https://www.natives-outdoors.org/blog",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Apparel, storytelling, community building, sustainability advocacy",
+    "geographic_focus": "United States",
+    "tags": [
+      "indigenous",
+      "native american",
+      "outdoor apparel",
+      "sustainability"
+    ]
+  },
+  {
+    "id": "outdoor_brown_girls_climb_014",
+    "name": "Brown Girls Climb",
+    "type": "Outdoor/Travel",
+    "category": "Community",
+    "focus_area": "Brown Women in Climbing",
+    "description": "Community for Brown women climbers to connect, share experiences, and support each other.",
+    "website": "https://www.browngirlsclimb.com",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Climbing events, community building, representation",
+    "geographic_focus": "United States",
+    "tags": [
+      "brown girls",
+      "climbing",
+      "women",
+      "rock climbing",
+      "community"
+    ]
+  },
+  {
+    "id": "outdoor_climbers_of_color_015",
+    "name": "Climbers of Color",
+    "type": "Outdoor/Travel",
+    "category": "Initiative",
+    "focus_area": "PoC Mountaineers",
+    "description": "Initiative to increase alpine and mountaineering expertise among People of Color outdoor educators.",
+    "website": "https://www.climbersofcolor.org",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Mountaineering training, educator development, alpine skills",
+    "geographic_focus": "United States",
+    "tags": [
+      "mountaineering",
+      "alpine",
+      "poc climbers",
+      "education"
+    ]
+  },
+  {
+    "id": "outdoor_hike_clerb_016",
+    "name": "Hike Clerb",
+    "type": "Outdoor/Travel",
+    "category": "Community",
+    "focus_area": "Intersectional Women Hiking",
+    "description": "Intersectional womxn's hike club creating inclusive outdoor spaces.",
+    "website": "https://www.hikeclerb.org",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Group hikes, community events, intersectional focus",
+    "geographic_focus": "United States",
+    "tags": [
+      "women hiking",
+      "intersectional",
+      "outdoors",
+      "community"
+    ]
+  },
+  {
+    "id": "outdoor_outdoor_asian_017",
+    "name": "Outdoor Asian",
+    "type": "Outdoor/Travel",
+    "category": "Community",
+    "focus_area": "Asian Pacific Islanders Outdoors",
+    "description": "Building a community of Asians & Pacific Islanders in the outdoors.",
+    "website": "https://www.outdoorasian.com",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Community building, outdoor events, representation",
+    "geographic_focus": "United States",
+    "tags": [
+      "asian",
+      "pacific islander",
+      "aapi",
+      "outdoors",
+      "hiking"
+    ]
+  },
+  {
+    "id": "outdoor_qpoc_hikers_018",
+    "name": "QPOC Hikers",
+    "type": "Outdoor/Travel",
+    "category": "Community",
+    "focus_area": "Queer PoC Hiking",
+    "description": "Pacific Northwest-based community connecting queer people of color with hiking and outdoors.",
+    "website": "qpochikers.com",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Hiking events, storytelling, visibility, learning opportunities",
+    "geographic_focus": "Pacific Northwest, United States",
+    "tags": [
+      "queer",
+      "lgbtq",
+      "poc",
+      "hiking",
+      "pacific northwest"
+    ]
+  },
+  {
+    "id": "outdoor_national_brotherhood_of_skiers_019",
+    "name": "National Brotherhood of Skiers",
+    "type": "Outdoor/Travel",
+    "category": "Nonprofit",
+    "focus_area": "Black Skiers",
+    "description": "Supporting Black participation in skiing and snowboarding through financial support and community.",
+    "website": "nbs.org",
+    "founded": "1973",
+    "community_size": "Not disclosed",
+    "key_programs": "Olympic Scholarship Fund, skiing events, community building",
+    "geographic_focus": "United States",
+    "tags": [
+      "black skiers",
+      "skiing",
+      "snowboarding",
+      "winter sports",
+      "scholarships"
+    ]
+  },
+  {
+    "id": "outdoor_team_blackstar_skydivers_020",
+    "name": "Team Blackstar Skydivers",
+    "type": "Outdoor/Travel",
+    "category": "Community",
+    "focus_area": "PoC Skydivers",
+    "description": "Online community of Black, Indigenous, Asian, Latinx and multiracial skydivers.",
+    "website": "https://www.melaninbasecamp.com/",
+    "founded": "2014",
+    "community_size": "270+ skydivers",
+    "key_programs": "Annual events, community building, diversity in skydiving",
+    "geographic_focus": "United States, Global",
+    "tags": [
+      "skydiving",
+      "black skydivers",
+      "diversity",
+      "extreme sports"
+    ]
+  },
+  {
+    "id": "outdoor_black_girls_travel_too_021",
+    "name": "Black Girls Travel Too",
+    "type": "Outdoor/Travel",
+    "category": "Community & Tours",
+    "focus_area": "Black Women Travel",
+    "description": "Travel community and tour company for Black women, prioritizing small intimate groups.",
+    "website": "https://www.blackgirlstraveltoo.com",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Small group tours, travel community, authentic experiences",
+    "geographic_focus": "Global",
+    "tags": [
+      "black women travel",
+      "group tours",
+      "solo travel",
+      "community"
+    ]
+  },
+  {
+    "id": "outdoor_hunters_of_color_023",
+    "name": "Hunters of Color",
+    "type": "Outdoor/Travel",
+    "category": "Community",
+    "focus_area": "BIPOC Hunting",
+    "description": "Community for BIPOC hunters to connect and share experiences.",
+    "website": "https://huntersofcolor.org",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Hunting community, education, representation",
+    "geographic_focus": "United States",
+    "tags": [
+      "hunting",
+      "bipoc",
+      "outdoors",
+      "conservation"
+    ]
+  },
+  {
+    "id": "outdoor_latino_community_fund_latinos_in_tech_washington_024",
+    "name": "Latino Community Fund - Latinos in Tech Washington",
+    "type": "Outdoor/Travel",
+    "category": "Nonprofit",
+    "focus_area": "Latino Tech & Outdoors",
+    "description": "Washington State organization fostering equitable tech sector and STEM access for Latino community.",
+    "website": "https://latinooutdoors.org/",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Tech sector equity, STEM opportunities, community leadership",
+    "geographic_focus": "Washington State",
+    "tags": [
+      "latino",
+      "tech equity",
+      "washington",
+      "stem"
+    ]
+  },
+  {
+    "id": "outdoor_color_my_outdoors_026",
+    "name": "Color My Outdoors",
+    "type": "Outdoor/Travel",
+    "category": "Community",
+    "focus_area": "PoC Outdoor Recreation",
+    "description": "Community promoting outdoor recreation and equity for Black and Brown communities in the Southeast.",
+    "website": "https://colormyoutdoors.org",
+    "founded": "Not specified",
+    "community_size": "Not disclosed",
+    "key_programs": "Outdoor storytelling, leadership programs, skill-building workshops, financial aid for outdoor activities",
+    "geographic_focus": "Southeastern United States",
+    "tags": [
+      "poc outdoors",
+      "black and brown",
+      "outdoor equity",
+      "community",
+      "recreation",
+      "southeast"
+    ]
+  }
+]

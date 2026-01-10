@@ -1,0 +1,98 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# Environment variables (contains secrets!)
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Claude Code settings (keep local settings private)
+.claude/settings.local.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Vector Databases
+chroma_db/
+qdrant_storage/
+*.db
+*.sqlite
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Logs
+*.log
+logs/
+
+# Data (comment out if you want to version control data)
+# data/*.json
+# data/*.csv
+
+# Model cache (sentence-transformers downloads)
+.cache/
+models/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Documentation builds
+docs/_build/
+
+# Temporary files
+*.tmp
+*.backup
+temp/
+tmp/
+
+# Excluding
+scripts/archive/
+scripts/.deprecated/
+tests/
+data/url_updates.json
+data/pending_submissions.json
+data/rejected_submissions.json
+pytest.ini
+htmlcov/
+CLAUDE.md
+
+# Documentation (only include ARCHITECTURE.md)
+docs/*
+!docs/ARCHITECTURE.md

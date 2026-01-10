@@ -1,0 +1,38 @@
+# PoC Platforms RAG Chatbot - Dependencies (December 2025)
+
+# UI Framework
+streamlit>=1.28.0
+
+# Embeddings (local)
+sentence-transformers>=2.2.0
+torch>=2.0.0  # Required by sentence-transformers
+
+# Vector Database
+# Option 1: Qdrant (RECOMMENDED - stable, no corruption, 1GB free tier)
+qdrant-client>=1.7.0
+
+# Option 2: ChromaDB (local fallback, can be unstable)
+chromadb>=0.5.0  # Optional, use only if Qdrant unavailable
+
+# LLM APIs
+openai>=1.0.0                    # For Cerebras & DeepSeek (OpenAI-compatible APIs)
+anthropic>=0.18.0                # For Claude Haiku (primary)
+
+# Data handling
+pandas>=2.0.0
+openpyxl>=3.1.0                  # For reading Excel files
+
+# Configuration & Environment
+python-dotenv>=1.0.0
+
+# Optional: Better progress bars
+tqdm>=4.65.0
+
+# Enrichment pipeline
+requests>=2.31.0                  # URL fetching
+beautifulsoup4>=4.12.0            # HTML parsing
+rapidfuzz>=3.0.0                  # Fuzzy matching for duplicate detection
+
+# Events pipeline
+feedparser>=6.0.0                 # RSS/Atom feed parsing
+tavily-python>=0.3.0              # Web search API for event discovery
