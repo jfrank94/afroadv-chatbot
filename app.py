@@ -774,14 +774,9 @@ def main():
     col_footer1, col_footer2, col_footer3 = st.columns(3)
 
     with col_footer1:
-        # Use markdown link instead of button to avoid switch_page issues
-        st.markdown(
-            '<a href="/01_Suggest_Platform" target="_self" '
-            'style="display: inline-block; width: 100%; text-align: center; padding: 0.5rem; '
-            'background: linear-gradient(135deg, #C1541B 0%, #E07A5F 100%); color: white; '
-            'border-radius: 0.5rem; text-decoration: none; font-weight: 600;">📝 Suggest a Platform</a>',
-            unsafe_allow_html=True
-        )
+        # Use st.switch_page for reliable navigation
+        if st.button("📝 Suggest a Platform", use_container_width=True, type="primary"):
+            st.switch_page("pages/01_Suggest_Platform.py")
 
     with col_footer2:
         # GitHub repo link (update with your actual repo URL)

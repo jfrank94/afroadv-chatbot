@@ -37,12 +37,8 @@ def save_submission(submission):
         json.dump(submissions, f, indent=2)
 
 # Back to chatbot button
-st.markdown("""
-<a href="/" target="_self" style="display: inline-block; padding: 0.5rem 1rem; margin-bottom: 1rem;
-   background: #81A684; color: white; border-radius: 0.5rem; text-decoration: none; font-weight: 600;">
-   ← Back to Chatbot
-</a>
-""", unsafe_allow_html=True)
+if st.button("← Back to Chatbot", type="secondary"):
+    st.switch_page("app.py")
 
 # Header
 st.title("📝 Suggest a Platform")
