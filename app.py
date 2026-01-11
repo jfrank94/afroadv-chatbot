@@ -773,26 +773,33 @@ def main():
     # Footer with functional links
     col_footer1, col_footer2, col_footer3 = st.columns(3)
 
+    # Cohesive button styling for all footer links
+    button_style = (
+        "display: inline-block; width: 100%; text-align: center; "
+        "padding: 0.6rem 1rem; background: linear-gradient(135deg, #5F7A61 0%, #7A9B76 100%); "
+        "color: white; border-radius: 0.5rem; text-decoration: none; "
+        "font-weight: 600; transition: transform 0.2s, box-shadow 0.2s; "
+        "box-shadow: 0 2px 8px rgba(95, 122, 97, 0.3);"
+    )
+
     with col_footer1:
-        # Use st.page_link for cross-page navigation
-        st.page_link("pages/01_Suggest_Platform.py", label="📝 Suggest a Platform", use_container_width=True)
+        st.markdown(
+            f'<a href="/01_Suggest_Platform" '
+            f'style="{button_style}">📝 Suggest a Platform</a>',
+            unsafe_allow_html=True
+        )
 
     with col_footer2:
-        # GitHub repo link (update with your actual repo URL)
         st.markdown(
-            '<a href="https://github.com/yourusername/afroadv-chatbot" target="_blank" '
-            'style="display: inline-block; width: 100%; text-align: center; padding: 0.5rem; '
-            'background: linear-gradient(135deg, #C1541B 0%, #E07A5F 100%); color: white; '
-            'border-radius: 0.5rem; text-decoration: none; font-weight: 600;">🤝 Contribute</a>',
+            f'<a href="https://github.com/yourusername/afroadv-chatbot" target="_blank" '
+            f'style="{button_style}">🤝 Contribute</a>',
             unsafe_allow_html=True
         )
 
     with col_footer3:
         st.markdown(
-            '<a href="https://github.com/yourusername/afroadv-chatbot/issues" target="_blank" '
-            'style="display: inline-block; width: 100%; text-align: center; padding: 0.5rem; '
-            'background: linear-gradient(135deg, #C1541B 0%, #E07A5F 100%); color: white; '
-            'border-radius: 0.5rem; text-decoration: none; font-weight: 600;">🐛 Report Issue</a>',
+            f'<a href="https://github.com/yourusername/afroadv-chatbot/issues" target="_blank" '
+            f'style="{button_style}">🐛 Report Issue</a>',
             unsafe_allow_html=True
         )
 
