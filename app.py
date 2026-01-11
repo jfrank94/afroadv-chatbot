@@ -784,7 +784,7 @@ def main():
 
     with col_footer1:
         st.markdown(
-            f'<a href="/01_Suggest_Platform" '
+            f'<a href="Suggest_Platform" '
             f'style="{button_style}">📝 Suggest a Platform</a>',
             unsafe_allow_html=True
         )
