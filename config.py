@@ -11,6 +11,19 @@ from dotenv import load_dotenv
 # Load environment variables from .env file (if it exists)
 load_dotenv()
 
+# Helper function to get environment variables (supports both .env and Streamlit secrets)
+def get_env(key: str, default: str = None) -> str:
+    """Get environment variable, checking Streamlit secrets first, then .env"""
+    # Try Streamlit secrets first (for cloud deployment)
+    try:
+        import streamlit as st
+        if hasattr(st, 'secrets') and key in st.secrets:
+            return st.secrets[key]
+    except (ImportError, FileNotFoundError, KeyError):
+        pass
+    # Fall back to os.getenv (for local development)
+    return os.getenv(key, default)
+
 # Project paths
 PROJECT_ROOT = Path(__file__).parent
 DATA_DIR = PROJECT_ROOT / "data"
@@ -21,14 +34,15 @@ PLATFORMS_JSON = DATA_DIR / "platforms.json"
 PLATFORMS_EXCEL = PROJECT_ROOT / "poc_platforms_database.xlsx"
 
 # LLM API Keys (with fallback chain)
-CEREBRAS_API_KEY = os.getenv("CEREBRAS_API_KEY")
-DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+CEREBRAS_API_KEY = get_env("CEREBRAS_API_KEY")
+DEEPSEEK_API_KEY = get_env("DEEPSEEK_API_KEY")
+ANTHROPIC_API_KEY = get_env("ANTHROPIC_API_KEY")
+TAVILY_API_KEY = get_env("TAVILY_API_KEY")  # For event discovery
 
 # Qdrant Cloud Configuration (for production deployment)
-QDRANT_URL = os.getenv("QDRANT_URL")  # e.g., https://xyz-example.eu-central.aws.cloud.qdrant.io:6333
-QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
-USE_QDRANT_CLOUD = os.getenv("USE_QDRANT_CLOUD", "false").lower() == "true"
+QDRANT_URL = get_env("QDRANT_URL")  # e.g., https://xyz-example.eu-central.aws.cloud.qdrant.io:6333
+QDRANT_API_KEY = get_env("QDRANT_API_KEY")
+USE_QDRANT_CLOUD = get_env("USE_QDRANT_CLOUD", "false").lower() == "true"
 
 # LLM Configuration
 CEREBRAS_MODEL = "llama3.1-70b"
