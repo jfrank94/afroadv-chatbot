@@ -1,7 +1,7 @@
 # PoC Platforms RAG Chatbot - Dependencies (December 2025)
 
 # UI Framework
-streamlit>=1.28.0
+streamlit>=1.31.0  # Requires 1.31.0+ for st.page_link()
 
 # Embeddings (local)
 sentence-transformers>=2.2.0

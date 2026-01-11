@@ -774,9 +774,8 @@ def main():
     col_footer1, col_footer2, col_footer3 = st.columns(3)
 
     with col_footer1:
-        # Use st.switch_page for reliable navigation
-        if st.button("📝 Suggest a Platform", use_container_width=True, type="primary"):
-            st.switch_page("pages/01_Suggest_Platform.py")
+        # Use st.page_link for cross-page navigation
+        st.page_link("pages/01_Suggest_Platform.py", label="📝 Suggest a Platform", use_container_width=True)
 
     with col_footer2:
         # GitHub repo link (update with your actual repo URL)

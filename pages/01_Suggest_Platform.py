@@ -37,8 +37,7 @@ def save_submission(submission):
         json.dump(submissions, f, indent=2)
 
 # Back to chatbot button
-if st.button("← Back to Chatbot", type="secondary"):
-    st.switch_page("app.py")
+st.page_link("app.py", label="← Back to Chatbot")
 
 # Header
 st.title("📝 Suggest a Platform")
