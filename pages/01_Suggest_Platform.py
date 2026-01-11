@@ -36,6 +36,14 @@ def save_submission(submission):
     with open(SUBMISSIONS_FILE, 'w') as f:
         json.dump(submissions, f, indent=2)
 
+# Back to chatbot button
+st.markdown("""
+<a href="/" target="_self" style="display: inline-block; padding: 0.5rem 1rem; margin-bottom: 1rem;
+   background: #81A684; color: white; border-radius: 0.5rem; text-decoration: none; font-weight: 600;">
+   ← Back to Chatbot
+</a>
+""", unsafe_allow_html=True)
+
 # Header
 st.title("📝 Suggest a Platform")
 
