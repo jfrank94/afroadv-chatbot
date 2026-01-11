@@ -14,22 +14,26 @@ load_dotenv()
 # Helper function to get environment variables (supports both .env and Streamlit secrets)
 def get_env(key: str, default: str = None) -> str:
     """Get environment variable, checking Streamlit secrets first, then .env"""
+    value = None
+
     # Try Streamlit secrets first (for cloud deployment)
     try:
         import streamlit as st
         if hasattr(st, 'secrets') and key in st.secrets:
             value = st.secrets[key]
-            # Handle None or empty string
-            if value is not None and value != "":
-                return value
+            # Only use if not None or empty
+            if value is not None and str(value).strip() != "":
+                return str(value)
     except (ImportError, FileNotFoundError, KeyError):
         pass
+
     # Fall back to os.getenv (for local development)
     value = os.getenv(key)
-    # Return default if value is None or empty
-    if value is None or value == "":
-        return default
-    return value
+    if value is not None and value != "":
+        return value
+
+    # Return default if nothing found
+    return default if default is not None else ""
 
 # Project paths
 PROJECT_ROOT = Path(__file__).parent
