@@ -18,11 +18,18 @@ def get_env(key: str, default: str = None) -> str:
     try:
         import streamlit as st
         if hasattr(st, 'secrets') and key in st.secrets:
-            return st.secrets[key]
+            value = st.secrets[key]
+            # Handle None or empty string
+            if value is not None and value != "":
+                return value
     except (ImportError, FileNotFoundError, KeyError):
         pass
     # Fall back to os.getenv (for local development)
-    return os.getenv(key, default)
+    value = os.getenv(key)
+    # Return default if value is None or empty
+    if value is None or value == "":
+        return default
+    return value
 
 # Project paths
 PROJECT_ROOT = Path(__file__).parent
