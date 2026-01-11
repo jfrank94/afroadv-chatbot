@@ -240,6 +240,98 @@ QDRANT_API_KEY=...
 
 ---
 
+## Community Submission System
+
+The platform includes a community-driven submission system for users to suggest new platforms.
+
+### User Flow
+
+1. **Submission Form** (`pages/01_Suggest_Platform.py`)
+   - Accessible via "📝 Suggest a Platform" button in app footer
+   - Collects: Name, Type, Website, Category, Focus Area, Description, Optional metadata
+   - Validates required fields and provides real-time feedback
+   - Stores submissions in `data/pending_submissions.json`
+
+2. **Submission Data Structure**
+```json
+{
+  "id": "uuid",
+  "submitted_at": "ISO timestamp",
+  "status": "pending|approved|rejected",
+  "platform": {
+    "name": "Platform Name",
+    "type": "Tech|Outdoor/Travel",
+    "category": "Nonprofit|Community|Company|...",
+    "focus_area": "Specific demographic",
+    "description": "Brief description",
+    "website": "example.com",
+    "founded": "2020",
+    "community_size": "10K+ members",
+    "key_programs": "Programs offered",
+    "geographic_focus": "United States",
+    "tags": ["tag1", "tag2"]
+  },
+  "submitter": {
+    "name": "Optional name",
+    "email": "Optional email"
+  }
+}
+```
+
+### Admin Review Workflow
+
+**Review Tool** (`scripts/review_submissions.py`):
+
+```bash
+# List all submissions with status
+python scripts/review_submissions.py --list
+
+# Interactive review session
+python scripts/review_submissions.py
+```
+
+**Review Actions**:
+- **[a] Approve** → Adds platform to `data/platforms.json` with auto-generated ID
+- **[r] Reject** → Moves to `data/rejected_submissions.json` with reason
+- **[s] Skip** → Review later
+- **[q] Quit** → End session
+
+**Platform ID Generation**:
+Format: `{type}_{name_slug}_{counter:03d}`
+Examples: `tech_pocit_001`, `outdoor_outdoor_afro_001`
+
+**Post-Approval Workflow**:
+1. Approve submission(s) via review tool
+2. Rebuild index: `python scripts/build_index.py`
+3. Optionally discover events: `python scripts/smart_populate_events.py`
+4. Commit and push: `git add data/platforms.json data/approved_submissions.json`
+5. Streamlit Cloud auto-deploys updates
+
+### Data Files
+
+| File | Purpose | Git Tracked |
+|------|---------|-------------|
+| `data/platforms.json` | Main platform database | ✅ Yes |
+| `data/pending_submissions.json` | Awaiting review | ❌ No |
+| `data/approved_submissions.json` | Approval history | ✅ Yes |
+| `data/rejected_submissions.json` | Rejection history | ❌ No |
+
+### Review Guidelines
+
+**Approve if**:
+- Active platform serving PoC communities
+- Verifiable website and legitimate organization
+- Aligned with tech or outdoor/travel focus
+- Not a duplicate
+
+**Reject if**:
+- Inactive/defunct organization
+- Not focused on PoC communities
+- Duplicate submission
+- Spam or invalid information
+
+---
+
 ## References
 
 - [Qdrant Docs](https://qdrant.tech/documentation)

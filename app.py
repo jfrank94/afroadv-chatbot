@@ -769,16 +769,36 @@ def main():
 
     # Footer
     st.divider()
+
+    # Footer with functional links
+    col_footer1, col_footer2, col_footer3 = st.columns(3)
+
+    with col_footer1:
+        if st.button("📝 Suggest a Platform", use_container_width=True):
+            st.switch_page("pages/01_Suggest_Platform.py")
+
+    with col_footer2:
+        # GitHub repo link (update with your actual repo URL)
+        st.markdown(
+            '<a href="https://github.com/yourusername/afroadv-chatbot" target="_blank" '
+            'style="display: inline-block; width: 100%; text-align: center; padding: 0.5rem; '
+            'background: linear-gradient(135deg, #C1541B 0%, #E07A5F 100%); color: white; '
+            'border-radius: 0.5rem; text-decoration: none; font-weight: 600;">🤝 Contribute</a>',
+            unsafe_allow_html=True
+        )
+
+    with col_footer3:
+        st.markdown(
+            '<a href="https://github.com/yourusername/afroadv-chatbot/issues" target="_blank" '
+            'style="display: inline-block; width: 100%; text-align: center; padding: 0.5rem; '
+            'background: linear-gradient(135deg, #C1541B 0%, #E07A5F 100%); color: white; '
+            'border-radius: 0.5rem; text-decoration: none; font-weight: 600;">🐛 Report Issue</a>',
+            unsafe_allow_html=True
+        )
+
     st.markdown("""
-    <div class="footer">
-        <div class="footer-main">
-            Built with care to uplift and connect PoC communities
-        </div>
-        <div class="footer-links">
-            <a href="https://github.com" target="_blank">Contribute</a>
-            <a href="https://github.com" target="_blank">Suggest a Platform</a>
-            <a href="https://github.com" target="_blank">Report Issue</a>
-        </div>
+    <div style="text-align: center; margin-top: 2rem; padding: 1rem; color: #5F7A61; font-size: 0.9rem;">
+        Built with care to uplift and connect PoC communities 💚
     </div>
     """, unsafe_allow_html=True)
 

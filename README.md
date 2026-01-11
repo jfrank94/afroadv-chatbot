@@ -137,10 +137,20 @@ QDRANT_API_KEY=...
 
 ## Contributing
 
-**Add a platform**:
+**Suggest a platform** (for users):
+1. Use the "📝 Suggest a Platform" button in the app
+2. Fill out the submission form
+3. Your submission will be reviewed and added if approved
+
+**Add a platform directly** (for maintainers):
 1. Edit [`data/platforms.json`](data/platforms.json)
-2. Run `python scripts/build_index.py`
+2. Run `python scripts/build_index.py` to rebuild the index
 3. Submit PR
+
+**Review community submissions** (for maintainers):
+- List submissions: `python scripts/review_submissions.py --list`
+- Review pending: `python scripts/review_submissions.py`
+- After approvals: Rebuild index and push to GitHub
 
 **Report issues**: [GitHub Issues](https://github.com/yourusername/poc-platforms-chatbot/issues)
 
