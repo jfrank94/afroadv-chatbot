@@ -10,6 +10,7 @@ import logging
 from src.core.retriever import Retriever
 from src.infrastructure.llm import LLMProvider, create_rag_prompt
 from src.events.event_store import EventStore
+from src.analytics import QueryLogger
 from src.core.conversation import (
     ConversationMemory,
     QueryReformulator,
@@ -37,7 +38,8 @@ class RAGChatbot:
         llm: Optional[LLMProvider] = None,
         n_results: int = 5,
         conversation_memory: int = 3,
-        enable_events: bool = True
+        enable_events: bool = True,
+        enable_analytics: bool = True
     ):
         """
         Initialize chatbot with retriever and LLM.
@@ -48,12 +50,16 @@ class RAGChatbot:
             n_results: Number of platforms to retrieve per query
             conversation_memory: Number of conversation turns to remember
             enable_events: Enable event search (default: True)
+            enable_analytics: Enable query logging for analytics (default: True)
         """
         self.retriever = retriever or Retriever()
         self.llm = llm or LLMProvider()
         self.n_results = n_results
         self.conversation_memory = conversation_memory
         self.enable_events = enable_events
+
+        # Initialize analytics logger
+        self.analytics_logger = QueryLogger() if enable_analytics else None
 
         # Initialize event store if events are enabled
         if self.enable_events:
@@ -99,7 +105,7 @@ class RAGChatbot:
             Dictionary with response, sources, events, and metadata
         """
         if not query.strip():
-            return {
+            result = {
                 "response": "Please ask me a question about PoC platforms in tech or outdoor/travel!",
                 "sources": [],
                 "events": [],
@@ -108,6 +114,17 @@ class RAGChatbot:
                 "error": "empty_query",
                 "query": query
             }
+            # Log empty query error
+            if self.analytics_logger:
+                try:
+                    self.analytics_logger.log_query(
+                        query=query,
+                        response=result["response"],
+                        error="empty_query"
+                    )
+                except Exception:
+                    pass
+            return result
 
         # Validate query length (prevent abuse and excessive token usage)
         MAX_QUERY_LENGTH = 1000
@@ -257,6 +274,18 @@ class RAGChatbot:
             "events_found": len(events),
             "query": query
         }
+
+        # Log query for analytics (no PII)
+        if self.analytics_logger:
+            try:
+                self.analytics_logger.log_query(
+                    query=query,
+                    response=response_text,
+                    sources=platforms,
+                    events=events
+                )
+            except Exception as e:
+                logger.warning(f"Failed to log analytics: {e}")
 
         return result
 
