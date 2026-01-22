@@ -78,8 +78,6 @@ def display_submission(submission):
         print(f"🏷️  Tags: {', '.join(platform['tags'])}")
 
     print(f"\n👤 Submitted by: {submitter['name']}")
-    if submitter.get('email'):
-        print(f"   Email: {submitter['email']}")
 
     print("="*70)
 

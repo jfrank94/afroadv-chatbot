@@ -136,17 +136,10 @@ with st.form("platform_submission", clear_on_submit=True):
     st.divider()
     st.subheader("Your Information (Optional)")
 
-    col5, col6 = st.columns(2)
-    with col5:
-        submitter_name = st.text_input(
-            "Your Name",
-            placeholder="Optional"
-        )
-    with col6:
-        submitter_email = st.text_input(
-            "Your Email",
-            placeholder="For updates on your submission"
-        )
+    submitter_name = st.text_input(
+        "Your Name",
+        placeholder="Optional - helps us credit contributors"
+    )
 
     # Submit button
     submitted = st.form_submit_button(
@@ -181,8 +174,7 @@ with st.form("platform_submission", clear_on_submit=True):
                     "tags": [tag.strip().lower() for tag in tags.split(",")] if tags else []
                 },
                 "submitter": {
-                    "name": submitter_name or "Anonymous",
-                    "email": submitter_email or ""
+                    "name": submitter_name or "Anonymous"
                 }
             }
 
@@ -195,9 +187,6 @@ with st.form("platform_submission", clear_on_submit=True):
                 **{name}** has been submitted for review. Our team will review it and
                 add it to the database if it meets our criteria.
                 """)
-
-                if submitter_email:
-                    st.info(f"📧 We'll send updates to **{submitter_email}**")
             except Exception as e:
                 st.error(f"Error saving submission: {e}")
 

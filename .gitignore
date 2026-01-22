@@ -89,6 +89,7 @@ tests/
 data/url_updates.json
 data/pending_submissions.json
 data/rejected_submissions.json
+data/analytics.jsonl
 pytest.ini
 htmlcov/
 CLAUDE.md

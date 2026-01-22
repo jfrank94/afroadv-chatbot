@@ -152,6 +152,11 @@ QDRANT_API_KEY=...
 - Review pending: `python scripts/review_submissions.py`
 - After approvals: Rebuild index and push to GitHub
 
+**View analytics** (for maintainers):
+- Summary stats: `python scripts/view_analytics.py`
+- Detailed breakdown: `python scripts/view_analytics.py --detailed`
+- Analytics are logged to `data/analytics.jsonl` (excluded from git)
+
 **Report issues**: [GitHub Issues](https://github.com/yourusername/poc-platforms-chatbot/issues)
 
 ---
