@@ -776,7 +776,7 @@ def main():
     st.divider()
 
     # Footer with functional links
-    col_footer1, col_footer2, col_footer3 = st.columns(3)
+    col_footer1, col_footer2 = st.columns(2)
 
     # Cohesive button styling for all footer links
     button_style = (
@@ -798,13 +798,6 @@ def main():
         st.markdown(
             f'<a href="https://github.com/yourusername/afroadv-chatbot" target="_blank" '
             f'style="{button_style}">🤝 Contribute</a>',
-            unsafe_allow_html=True
-        )
-
-    with col_footer3:
-        st.markdown(
-            f'<a href="https://github.com/yourusername/afroadv-chatbot/issues" target="_blank" '
-            f'style="{button_style}">🐛 Report Issue</a>',
             unsafe_allow_html=True
         )
 
