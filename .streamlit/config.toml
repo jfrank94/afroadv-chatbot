@@ -1,0 +1,15 @@
+[server]
+# Optimize for faster cold starts
+maxUploadSize = 10
+enableXsrfProtection = true
+enableCORS = false
+
+[browser]
+gatherUsageStats = false
+
+[theme]
+primaryColor = "#5F7A61"
+backgroundColor = "#F8F4E8"
+secondaryBackgroundColor = "#EDE7D9"
+textColor = "#2D3436"
+font = "sans serif"
