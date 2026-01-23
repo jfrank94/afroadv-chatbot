@@ -775,10 +775,8 @@ def main():
     # Footer
     st.divider()
 
-    # Footer with functional links
-    col_footer1, col_footer2 = st.columns(2)
-
-    # Cohesive button styling for all footer links
+    # Footer with functional link
+    # Cohesive button styling
     button_style = (
         "display: inline-block; width: 100%; text-align: center; "
         "padding: 0.6rem 1rem; background: linear-gradient(135deg, #5F7A61 0%, #7A9B76 100%); "
@@ -787,19 +785,11 @@ def main():
         "box-shadow: 0 2px 8px rgba(95, 122, 97, 0.3);"
     )
 
-    with col_footer1:
-        st.markdown(
-            f'<a href="Suggest_Platform" '
-            f'style="{button_style}">📝 Suggest a Platform</a>',
-            unsafe_allow_html=True
-        )
-
-    with col_footer2:
-        st.markdown(
-            f'<a href="https://github.com/yourusername/afroadv-chatbot" target="_blank" '
-            f'style="{button_style}">🤝 Contribute</a>',
-            unsafe_allow_html=True
-        )
+    st.markdown(
+        f'<a href="Suggest_Platform" '
+        f'style="{button_style}">📝 Suggest a Platform</a>',
+        unsafe_allow_html=True
+    )
 
     st.markdown("""
     <div style="text-align: center; margin-top: 2rem; padding: 1rem; color: #5F7A61; font-size: 0.9rem;">
