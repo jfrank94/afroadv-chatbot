@@ -520,14 +520,17 @@ st.markdown("""
 def initialize_chatbot():
     """Initialize chatbot (cached to avoid reloading on every interaction)."""
     try:
-        chatbot = RAGChatbot(
-            n_results=config.DEFAULT_TOP_K,
-            conversation_memory=config.CONVERSATION_MEMORY_TURNS,
-            enable_events=True  # Events now populated!
-        )
+        # Show loading message during first initialization
+        with st.spinner("🌱 Loading chatbot (this may take ~30s on first deploy)..."):
+            chatbot = RAGChatbot(
+                n_results=config.DEFAULT_TOP_K,
+                conversation_memory=config.CONVERSATION_MEMORY_TURNS,
+                enable_events=True  # Events now populated!
+            )
         return chatbot
     except Exception as e:
         st.error(f"❌ Failed to initialize chatbot: {e}")
+        st.error("This may be due to model download issues. Please refresh the page.")
         raise
 
 
@@ -633,8 +636,10 @@ def main():
             3. Restart the app
             """)
 
-    # Initialize chatbot
+    # Initialize chatbot with status
+    st.info("🔧 Loading chatbot... This may take 30-60 seconds on first deployment while downloading AI models (~90MB).")
     chatbot = initialize_chatbot()
+    st.success("✅ Chatbot ready!")
 
     # Sidebar with options
     with st.sidebar:
