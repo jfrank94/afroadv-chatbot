@@ -1,8 +1,5 @@
 [server]
-# Optimize for faster cold starts
 maxUploadSize = 10
-enableXsrfProtection = true
-enableCORS = false
 
 [browser]
 gatherUsageStats = false
