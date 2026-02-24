@@ -148,7 +148,7 @@ class URLVerifier:
         # Exclude news/article/product listing patterns
         exclude_patterns = [
             '/news/', '/blog/', '/article/', '/press/', '/story/', '/post/',
-            '/20\d{2}/',  # Year patterns like /2024/
+            r'/20\d{2}/',  # Year patterns like /2024/
             '/featured/', '/spotlight/', '/interview/', '/profile/',
             '/product/', '/item/', '/collection/',  # E-commerce
             'medium.com', 'techcrunch.com', 'forbes.com', 'theverge.com',

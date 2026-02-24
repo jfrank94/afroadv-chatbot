@@ -636,10 +636,8 @@ def main():
             3. Restart the app
             """)
 
-    # Initialize chatbot with status
-    st.info("🔧 Loading chatbot... This may take 30-60 seconds on first deployment while downloading AI models (~90MB).")
+    # Initialize chatbot
     chatbot = initialize_chatbot()
-    st.success("✅ Chatbot ready!")
 
     # Sidebar with options
     with st.sidebar:

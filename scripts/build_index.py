@@ -128,10 +128,13 @@ def build_index(local_mode: bool = True):
             "type": p["type"],
             "category": p.get("category", ""),
             "focus_area": p.get("focus_area", ""),
+            "description": p.get("description", ""),
             "website": p.get("website", ""),
             "founded": p.get("founded", ""),
             "community_size": p.get("community_size", ""),
-            "geographic_focus": p.get("geographic_focus", "")
+            "key_programs": p.get("key_programs", ""),
+            "geographic_focus": p.get("geographic_focus", ""),
+            "tags": ", ".join(p.get("tags", []))
         }
         for p in platforms
     ]

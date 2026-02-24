@@ -31,7 +31,8 @@ from qdrant_client.models import (
     Filter,
     FieldCondition,
     MatchValue,
-    Condition
+    Condition,
+    PayloadSchemaType
 )
 from sentence_transformers import SentenceTransformer
 from src.infrastructure.embedding_singleton import get_embedding_model
@@ -157,9 +158,29 @@ class QdrantVectorDB:
                         distance=Distance.COSINE
                     )
                 )
-                logger.info(f"Collection '{self.collection_name}' created")
+                # Create payload indexes for filterable fields
+                for field in ["platform_id", "type", "name"]:
+                    try:
+                        self.client.create_payload_index(
+                            collection_name=self.collection_name,
+                            field_name=field,
+                            field_schema=PayloadSchemaType.KEYWORD
+                        )
+                    except Exception:
+                        pass  # Index may already exist
+                logger.info(f"Collection '{self.collection_name}' created with payload indexes")
             else:
                 logger.info(f"Collection '{self.collection_name}' already exists")
+                # Ensure payload indexes exist (safe to call on existing collections)
+                for field in ["platform_id", "type", "name"]:
+                    try:
+                        self.client.create_payload_index(
+                            collection_name=self.collection_name,
+                            field_name=field,
+                            field_schema=PayloadSchemaType.KEYWORD
+                        )
+                    except Exception:
+                        pass  # Index already exists
 
             # Get collection info
             info = self.client.get_collection(self.collection_name)

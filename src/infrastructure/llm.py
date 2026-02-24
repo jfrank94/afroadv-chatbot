@@ -12,6 +12,7 @@ import time
 import logging
 from typing import List, Dict, Optional, Any, Callable
 from openai import OpenAI
+import config
 
 try:
     from anthropic import Anthropic
@@ -242,7 +243,7 @@ class LLMProvider:
 
                     # Call Claude with prompt caching (and optional tools like web search)
                     create_params = {
-                        "model": "claude-3-5-haiku-20241022",
+                        "model": config.CLAUDE_MODEL,
                         "max_tokens": max_tokens,
                         "temperature": temperature,
                         "system": system_content if system_content else [],

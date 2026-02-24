@@ -56,9 +56,9 @@ QDRANT_API_KEY = get_env("QDRANT_API_KEY")
 USE_QDRANT_CLOUD = get_env("USE_QDRANT_CLOUD", "false").lower() == "true"
 
 # LLM Configuration
-CEREBRAS_MODEL = "llama3.1-70b"
-DEEPSEEK_MODEL = "deepseek-chat"
-CLAUDE_MODEL = "claude-3-5-haiku-20241022"
+CEREBRAS_MODEL = get_env("CEREBRAS_MODEL", "llama3.1-70b")
+DEEPSEEK_MODEL = get_env("DEEPSEEK_MODEL", "deepseek-chat")
+CLAUDE_MODEL = get_env("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
 
 # Embedding Model Configuration
 EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
