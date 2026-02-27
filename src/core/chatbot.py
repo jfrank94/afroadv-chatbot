@@ -317,12 +317,24 @@ class RAGChatbot:
         # Build context from platforms
         platform_context = "Relevant Platforms:\n\n"
         for i, platform in enumerate(platforms, 1):
+            # Build location info from geographic_focus and states
+            location_info = ""
+            geo = platform.get('geographic_focus', '')
+            states = platform.get('states', '')
+            if states:
+                location_info = f"   Active in states: {states}\n"
+            elif geo:
+                location_info = f"   Geographic focus: {geo}\n"
+
             platform_context += (
                 f"{i}. **{platform['name']}** ({platform['type']})\n"
                 f"   Focus: {platform['focus_area']}\n"
                 f"   Description: {platform['description']}\n"
-                f"   Website: {platform['website']}\n\n"
+                f"   Website: {platform['website']}\n"
             )
+            if location_info:
+                platform_context += location_info
+            platform_context += "\n"
 
         # Build context from events if available
         event_context = ""

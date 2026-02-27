@@ -222,6 +222,7 @@ class Retriever:
                         "community_size": platform.get("community_size", ""),
                         "key_programs": platform.get("key_programs", ""),
                         "geographic_focus": platform.get("geographic_focus", ""),
+                        "states": ", ".join(platform.get("states", [])),
                         "tags": platform.get("tags", []),
                         "relevance_score": 0.9  # High score for keyword match
                     })
@@ -265,6 +266,7 @@ class Retriever:
                 "community_size": metadata.get("community_size", ""),
                 "key_programs": metadata.get("key_programs", ""),
                 "geographic_focus": metadata.get("geographic_focus", ""),
+                "states": metadata.get("states", ""),
                 "tags": metadata.get("tags", "").split(", ") if metadata.get("tags") else [],
                 "relevance_score": float(distance)  # Lower distance = more similar
             }
