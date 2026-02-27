@@ -81,6 +81,33 @@ def prepare_platform_text(platform: dict) -> str:
     Returns:
         Rich text representation optimized for semantic search
     """
+    # Map state codes to full names for better semantic search
+    STATE_NAMES = {
+        "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas",
+        "CA": "California", "CO": "Colorado", "CT": "Connecticut", "DE": "Delaware",
+        "DC": "Washington DC", "FL": "Florida", "GA": "Georgia", "HI": "Hawaii",
+        "IA": "Iowa", "ID": "Idaho", "IL": "Illinois", "IN": "Indiana",
+        "KS": "Kansas", "KY": "Kentucky", "LA": "Louisiana", "MA": "Massachusetts",
+        "MD": "Maryland", "ME": "Maine", "MI": "Michigan", "MN": "Minnesota",
+        "MO": "Missouri", "MS": "Mississippi", "MT": "Montana", "NC": "North Carolina",
+        "ND": "North Dakota", "NE": "Nebraska", "NH": "New Hampshire", "NJ": "New Jersey",
+        "NM": "New Mexico", "NV": "Nevada", "NY": "New York", "OH": "Ohio",
+        "OK": "Oklahoma", "OR": "Oregon", "PA": "Pennsylvania", "RI": "Rhode Island",
+        "SC": "South Carolina", "SD": "South Dakota", "TN": "Tennessee", "TX": "Texas",
+        "UT": "Utah", "VA": "Virginia", "VT": "Vermont", "WA": "Washington",
+        "WI": "Wisconsin", "WV": "West Virginia", "WY": "Wyoming"
+    }
+
+    # Build state text for embedding
+    states = platform.get("states", [])
+    state_text = ""
+    if states:
+        if "ALL" in states:
+            state_text = "Available in all 50 US states nationwide"
+        else:
+            full_names = [STATE_NAMES.get(s, s) for s in states]
+            state_text = f"Active in: {', '.join(full_names)}"
+
     parts = [
         # Name twice for emphasis
         platform.get("name", ""),
@@ -95,6 +122,9 @@ def prepare_platform_text(platform: dict) -> str:
         # Key details
         f"Programs: {platform.get('key_programs', '')}",
         f"Location: {platform.get('geographic_focus', '')}",
+
+        # State-level presence for local search
+        state_text,
 
         # Name again for semantic boost
         f"Community: {platform.get('name', '')}",

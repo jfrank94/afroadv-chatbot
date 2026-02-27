@@ -17,7 +17,8 @@
       "job board",
       "tech careers",
       "underrepresented"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "tech_blacks_in_technology_bit_002",
@@ -30,13 +31,28 @@
     "founded": "2008/2012",
     "community_size": "40,000+ members across 20 countries",
     "key_programs": "BITCON annual conference, Slack community, LinkedIn group, job board, local chapters",
-    "geographic_focus": "Global (US-based)",
+    "geographic_focus": "United States (13+ local chapters)",
     "tags": [
       "black tech",
       "african american",
       "networking",
       "conference",
       "career development"
+    ],
+    "states": [
+      "CA",
+      "FL",
+      "IL",
+      "MN",
+      "NC",
+      "NE",
+      "NY",
+      "OH",
+      "OR",
+      "PA",
+      "TX",
+      "VA",
+      "DC"
     ]
   },
   {
@@ -58,7 +74,8 @@
       "machine translation",
       "open source",
       "research"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "tech_techqueria_004",
@@ -71,7 +88,7 @@
     "founded": "2015",
     "community_size": "19,000+ members, 10,000+ Slack users",
     "key_programs": "Slack community, job board, local chapters, annual summit, mentorship programs",
-    "geographic_focus": "US-focused with global reach",
+    "geographic_focus": "United States (10 chapters)",
     "tags": [
       "latinx",
       "hispanic",
@@ -80,6 +97,16 @@
       "tech community",
       "diversity",
       "mentorship"
+    ],
+    "states": [
+      "CA",
+      "GA",
+      "IL",
+      "MA",
+      "NM",
+      "NY",
+      "TX",
+      "WI"
     ]
   },
   {
@@ -99,7 +126,8 @@
       "software development",
       "career advancement",
       "networking"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "tech_black_professional_in_tech_network_bptn_006",
@@ -118,7 +146,8 @@
       "recruitment",
       "networking",
       "tech careers"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "tech_aises_007",
@@ -139,7 +168,8 @@
       "engineering",
       "science",
       "scholarships"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "tech_natives_in_tech_008",
@@ -158,7 +188,8 @@
       "indigenous tech",
       "open source",
       "networking"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "tech_code2040_009",
@@ -171,7 +202,7 @@
     "founded": "2012",
     "community_size": "Thousands of alumni",
     "key_programs": "Fellows Program, Early Career Accelerator, mentorship, community building",
-    "geographic_focus": "United States",
+    "geographic_focus": "United States (Bay Area HQ)",
     "tags": [
       "black",
       "latinx",
@@ -179,6 +210,9 @@
       "career development",
       "fellows",
       "mentorship"
+    ],
+    "states": [
+      "CA"
     ]
   },
   {
@@ -192,13 +226,24 @@
     "founded": "2014",
     "community_size": "20,000+ members",
     "key_programs": "Professional development, recruiting partnerships, mentorship, annual summit, 20+ global chapters",
-    "geographic_focus": "Global",
+    "geographic_focus": "United States (14+ chapters)",
     "tags": [
       "latina",
       "women in tech",
       "mentorship",
       "leadership",
       "networking"
+    ],
+    "states": [
+      "CA",
+      "DC",
+      "FL",
+      "IL",
+      "MA",
+      "NC",
+      "NY",
+      "PA",
+      "TX"
     ]
   },
   {
@@ -212,13 +257,17 @@
     "founded": "2017",
     "community_size": "Not disclosed",
     "key_programs": "Annual conference, 10 national/international mastermind groups, networking",
-    "geographic_focus": "United States",
+    "geographic_focus": "United States (NYC, Atlanta)",
     "tags": [
       "black women",
       "entrepreneurship",
       "conference",
       "networking",
       "founders"
+    ],
+    "states": [
+      "NY",
+      "GA"
     ]
   },
   {
@@ -232,7 +281,7 @@
     "founded": "2011",
     "community_size": "30,000+ students reached",
     "key_programs": "Coding workshops, summer camps, hackathons, mentorship",
-    "geographic_focus": "United States",
+    "geographic_focus": "United States (11+ chapters)",
     "tags": [
       "girls",
       "coding",
@@ -240,6 +289,18 @@
       "education",
       "programming",
       "workshops"
+    ],
+    "states": [
+      "CA",
+      "DC",
+      "GA",
+      "IL",
+      "MA",
+      "MI",
+      "NC",
+      "NY",
+      "TX",
+      "WA"
     ]
   },
   {
@@ -260,7 +321,8 @@
       "media",
       "innovation",
       "entrepreneurship"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "tech_we_build_black_014",
@@ -279,7 +341,8 @@
       "coding",
       "community",
       "software development"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "tech_black_code_collective_015",
@@ -298,7 +361,8 @@
       "coding",
       "community",
       "skill development"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "tech_valence_016",
@@ -316,7 +380,8 @@
       "black professionals",
       "recruitment",
       "career opportunities"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "tech_shpe_017",
@@ -329,13 +394,16 @@
     "founded": "1974",
     "community_size": "13,000+ members",
     "key_programs": "Mentorship, programming, annual conference, scholarships, career development",
-    "geographic_focus": "United States",
+    "geographic_focus": "United States (300+ chapters, all 50 states)",
     "tags": [
       "hispanic",
       "latino",
       "engineering",
       "stem",
       "professional development"
+    ],
+    "states": [
+      "ALL"
     ]
   },
   {
@@ -349,12 +417,15 @@
     "founded": "2015",
     "community_size": "Not disclosed",
     "key_programs": "Research reports, policy advocacy, Leaky Tech Pipeline research, Native Tech ecosystem reports",
-    "geographic_focus": "United States",
+    "geographic_focus": "United States (Oakland, CA HQ)",
     "tags": [
       "diversity research",
       "tech equity",
       "policy",
       "advocacy"
+    ],
+    "states": [
+      "CA"
     ]
   },
   {
@@ -368,12 +439,33 @@
     "founded": "1995",
     "community_size": "20,000+ alumni",
     "key_programs": "Tech training programs, Diverse by Design initiative, career placement",
-    "geographic_focus": "United States",
+    "geographic_focus": "United States (20+ campuses)",
     "tags": [
       "tech training",
       "free education",
       "career development",
       "diversity"
+    ],
+    "states": [
+      "AZ",
+      "CA",
+      "CO",
+      "DC",
+      "FL",
+      "GA",
+      "IL",
+      "IN",
+      "MA",
+      "MD",
+      "MI",
+      "MO",
+      "NC",
+      "NJ",
+      "NY",
+      "OH",
+      "PA",
+      "TX",
+      "WA"
     ]
   },
   {
@@ -393,7 +485,8 @@
       "job matching",
       "startups",
       "fortune 500"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "tech_girls_who_code_021",
@@ -406,13 +499,16 @@
     "founded": "2012",
     "community_size": "450,000+ girls reached globally",
     "key_programs": "Summer programs, clubs, college programs, alumni support",
-    "geographic_focus": "Global",
+    "geographic_focus": "United States (all 50 states, 5,700+ clubs)",
     "tags": [
       "girls",
       "women in tech",
       "coding",
       "education",
       "gender gap"
+    ],
+    "states": [
+      "ALL"
     ]
   },
   {
@@ -433,7 +529,8 @@
       "diversity",
       "education",
       "youth"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "tech_latino_business_action_network_lban_023",
@@ -453,7 +550,8 @@
       "startups",
       "business",
       "accelerator"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "tech_latinx_startup_alliance_024",
@@ -473,7 +571,8 @@
       "founders",
       "entrepreneurship",
       "mentorship"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "outdoor_outdoor_afro_001",
@@ -486,7 +585,7 @@
     "founded": "2009",
     "community_size": "100+ volunteer leaders in 60 cities, 60,000+ participants annually",
     "key_programs": "Hiking, kayaking, birding, fishing, swimming, leadership training (OALT), volunteer programs",
-    "geographic_focus": "United States",
+    "geographic_focus": "United States (32 states, 60+ cities)",
     "tags": [
       "black outdoors",
       "hiking",
@@ -494,6 +593,25 @@
       "recreation",
       "leadership",
       "conservation"
+    ],
+    "states": [
+      "CA",
+      "CO",
+      "FL",
+      "GA",
+      "IA",
+      "IL",
+      "MI",
+      "MO",
+      "NC",
+      "NY",
+      "OH",
+      "OR",
+      "SC",
+      "TX",
+      "UT",
+      "WI",
+      "DC"
     ]
   },
   {
@@ -514,7 +632,8 @@
       "destinations",
       "vacation",
       "tourism"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "outdoor_nomadness_travel_tribe_003",
@@ -533,7 +652,8 @@
       "travel community",
       "group trips",
       "digital nomad"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "outdoor_melanin_base_camp_004",
@@ -546,7 +666,7 @@
     "founded": "2016",
     "community_size": "86,000+ Instagram followers, 50,000+ monthly blog viewers",
     "key_programs": "Blog content, Diversify Outdoors coalition, #melaninbasecamp hashtag campaign",
-    "geographic_focus": "United States, Global",
+    "geographic_focus": "United States, Global online",
     "tags": [
       "outdoor sports",
       "adventure",
@@ -554,6 +674,12 @@
       "climbing",
       "skydiving",
       "hiking"
+    ],
+    "states": [
+      "CO",
+      "CA",
+      "WA",
+      "OR"
     ]
   },
   {
@@ -567,7 +693,7 @@
     "founded": "2013",
     "community_size": "200+ volunteers, 38,000+ participants, 122,000+ social followers",
     "key_programs": "Vamos Outdoors (hiking, camping, birding), Yo Cuento Outdoors storytelling, Jobs+ board, leadership development",
-    "geographic_focus": "United States",
+    "geographic_focus": "United States (30+ locations)",
     "tags": [
       "latino",
       "hispanic",
@@ -575,6 +701,14 @@
       "familia",
       "conservation",
       "hiking"
+    ],
+    "states": [
+      "CA",
+      "DC",
+      "IL",
+      "NY",
+      "TX",
+      "WI"
     ]
   },
   {
@@ -595,7 +729,8 @@
       "outdoor advocacy",
       "coalition",
       "equity"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "outdoor_black_abroad_007",
@@ -614,7 +749,8 @@
       "travel collective",
       "culture",
       "merchandise"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "outdoor_soul_trak_outdoors_008",
@@ -627,12 +763,16 @@
     "founded": "Not specified",
     "community_size": "Not disclosed",
     "key_programs": "Youth programs, adult programs, student ambassador program (Howard University), documentary viewings",
-    "geographic_focus": "United States",
+    "geographic_focus": "Washington D.C. metro area",
     "tags": [
       "urban outdoors",
       "hiking",
       "youth programs",
       "green spaces"
+    ],
+    "states": [
+      "DC",
+      "MD"
     ]
   },
   {
@@ -646,12 +786,15 @@
     "founded": "Not specified",
     "community_size": "Not disclosed",
     "key_programs": "Career pipeline programs, gear access, outdoor education",
-    "geographic_focus": "Colorado, United States",
+    "geographic_focus": "Colorado",
     "tags": [
       "black outdoors",
       "career development",
       "economic equity",
       "gear access"
+    ],
+    "states": [
+      "CO"
     ]
   },
   {
@@ -665,12 +808,15 @@
     "founded": "Not specified",
     "community_size": "Not disclosed",
     "key_programs": "Guided outdoor programs, community events, gear rental",
-    "geographic_focus": "Colorado, United States",
+    "geographic_focus": "Colorado",
     "tags": [
       "bipoc outdoors",
       "denver",
       "guided trips",
       "community"
+    ],
+    "states": [
+      "CO"
     ]
   },
   {
@@ -691,7 +837,8 @@
       "women",
       "hiking",
       "healing"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "outdoor_native_womens_wilderness_012",
@@ -710,7 +857,8 @@
       "wilderness",
       "outdoors",
       "indigenous"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "outdoor_natives_outdoors_013",
@@ -729,7 +877,8 @@
       "native american",
       "outdoor apparel",
       "sustainability"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "outdoor_brown_girls_climb_014",
@@ -742,13 +891,26 @@
     "founded": "Not specified",
     "community_size": "Not disclosed",
     "key_programs": "Climbing events, community building, representation",
-    "geographic_focus": "United States",
+    "geographic_focus": "United States (10 regional chapters)",
     "tags": [
       "brown girls",
       "climbing",
       "women",
       "rock climbing",
       "community"
+    ],
+    "states": [
+      "CA",
+      "CO",
+      "DC",
+      "IL",
+      "MA",
+      "MD",
+      "NC",
+      "NJ",
+      "NV",
+      "NY",
+      "VA"
     ]
   },
   {
@@ -768,6 +930,12 @@
       "alpine",
       "poc climbers",
       "education"
+    ],
+    "states": [
+      "CA",
+      "CO",
+      "NY",
+      "WA"
     ]
   },
   {
@@ -781,12 +949,17 @@
     "founded": "Not specified",
     "community_size": "Not disclosed",
     "key_programs": "Group hikes, community events, intersectional focus",
-    "geographic_focus": "United States",
+    "geographic_focus": "United States (LA, NYC, Bay Area)",
     "tags": [
       "women hiking",
       "intersectional",
       "outdoors",
       "community"
+    ],
+    "states": [
+      "CA",
+      "NY",
+      "TX"
     ]
   },
   {
@@ -807,7 +980,8 @@
       "aapi",
       "outdoors",
       "hiking"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "outdoor_qpoc_hikers_018",
@@ -820,13 +994,17 @@
     "founded": "Not specified",
     "community_size": "Not disclosed",
     "key_programs": "Hiking events, storytelling, visibility, learning opportunities",
-    "geographic_focus": "Pacific Northwest, United States",
+    "geographic_focus": "Pacific Northwest",
     "tags": [
       "queer",
       "lgbtq",
       "poc",
       "hiking",
       "pacific northwest"
+    ],
+    "states": [
+      "OR",
+      "WA"
     ]
   },
   {
@@ -847,7 +1025,8 @@
       "snowboarding",
       "winter sports",
       "scholarships"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "outdoor_team_blackstar_skydivers_020",
@@ -866,7 +1045,8 @@
       "black skydivers",
       "diversity",
       "extreme sports"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "outdoor_black_girls_travel_too_021",
@@ -885,7 +1065,8 @@
       "group tours",
       "solo travel",
       "community"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "outdoor_hunters_of_color_023",
@@ -904,7 +1085,8 @@
       "bipoc",
       "outdoors",
       "conservation"
-    ]
+    ],
+    "states": []
   },
   {
     "id": "outdoor_latino_community_fund_latinos_in_tech_washington_024",
@@ -923,6 +1105,9 @@
       "tech equity",
       "washington",
       "stem"
+    ],
+    "states": [
+      "WA"
     ]
   },
   {
@@ -944,6 +1129,13 @@
       "community",
       "recreation",
       "southeast"
+    ],
+    "states": [
+      "GA",
+      "NC",
+      "SC",
+      "TN",
+      "VA"
     ]
   }
 ]
