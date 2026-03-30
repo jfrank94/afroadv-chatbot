@@ -23,6 +23,7 @@ import logging
 import os
 import hashlib
 from typing import List, Dict, Optional, Any, Sequence
+import config
 from qdrant_client import QdrantClient
 from qdrant_client.models import (
     Distance,
@@ -116,7 +117,7 @@ class QdrantVectorDB:
         if local_mode:
             logger.info("Initializing Qdrant in local (persistent disk) mode")
             # Use persistent disk storage instead of in-memory for production
-            self.client = QdrantClient(path="./qdrant_storage")
+            self.client = QdrantClient(path=config.QDRANT_LOCAL_PATH)
         else:
             url = url or os.getenv("QDRANT_URL")
             api_key = api_key or os.getenv("QDRANT_API_KEY")
@@ -134,6 +135,28 @@ class QdrantVectorDB:
 
         # Create collection if it doesn't exist
         self._setup_collection()
+
+    def _ensure_payload_index(self, field: str) -> None:
+        """Create a keyword payload index on a field if it doesn't already exist.
+
+        Qdrant raises an error when creating a duplicate index; this method
+        handles that gracefully while surfacing any unexpected errors.
+
+        Args:
+            field: Metadata field name to index (e.g. "platform_id", "type")
+        """
+        try:
+            self.client.create_payload_index(
+                collection_name=self.collection_name,
+                field_name=field,
+                field_schema=PayloadSchemaType.KEYWORD
+            )
+        except Exception as e:
+            # Qdrant returns an error when the index already exists — this is expected.
+            # Any other error (e.g. network failure) is logged as a warning.
+            error_msg = str(e).lower()
+            if "already exists" not in error_msg and "conflict" not in error_msg:
+                logger.warning(f"Unexpected error creating payload index for '{field}': {e}")
 
     def _setup_collection(self) -> None:
         """Create collection if it doesn't exist.
@@ -160,27 +183,13 @@ class QdrantVectorDB:
                 )
                 # Create payload indexes for filterable fields
                 for field in ["platform_id", "type", "name"]:
-                    try:
-                        self.client.create_payload_index(
-                            collection_name=self.collection_name,
-                            field_name=field,
-                            field_schema=PayloadSchemaType.KEYWORD
-                        )
-                    except Exception:
-                        pass  # Index may already exist
+                    self._ensure_payload_index(field)
                 logger.info(f"Collection '{self.collection_name}' created with payload indexes")
             else:
                 logger.info(f"Collection '{self.collection_name}' already exists")
                 # Ensure payload indexes exist (safe to call on existing collections)
                 for field in ["platform_id", "type", "name"]:
-                    try:
-                        self.client.create_payload_index(
-                            collection_name=self.collection_name,
-                            field_name=field,
-                            field_schema=PayloadSchemaType.KEYWORD
-                        )
-                    except Exception:
-                        pass  # Index already exists
+                    self._ensure_payload_index(field)
 
             # Get collection info
             info = self.client.get_collection(self.collection_name)

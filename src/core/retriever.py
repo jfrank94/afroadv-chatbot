@@ -13,6 +13,7 @@ Key features:
 
 from typing import List, Dict, Optional, Any
 import logging
+import config
 from src.infrastructure.vectordb import QdrantVectorDB
 
 logger = logging.getLogger(__name__)
@@ -49,7 +50,6 @@ class Retriever:
                        Default is True, but overridden by config.USE_QDRANT_CLOUD if set
         """
         # Check config for cloud mode override
-        import config
         use_cloud = getattr(config, 'USE_QDRANT_CLOUD', False)
         if use_cloud:
             local_mode = False

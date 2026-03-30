@@ -7,6 +7,7 @@ Updated: Now uses Qdrant for stability (no corruption issues)
 """
 
 import logging
+import config
 from datetime import datetime, timedelta
 from typing import List, Dict, Optional, Any
 from src.infrastructure.vectordb import QdrantVectorDB
@@ -53,7 +54,6 @@ class EventStore:
             logger.info(f"✓ EventStore using shared Qdrant client with collection '{collection_name}'")
         else:
             # Check config for cloud mode override
-            import config
             use_cloud = getattr(config, 'USE_QDRANT_CLOUD', False)
             if use_cloud:
                 local_mode = False
@@ -67,6 +67,52 @@ class EventStore:
             logger.info(f"✓ EventStore created new Qdrant client (local_mode={local_mode})")
 
         logger.info(f"✓ EventStore initialized with collection '{collection_name}'")
+
+    @staticmethod
+    def _is_future_event(date_str: Optional[str], today: datetime) -> bool:
+        """Return True if the event date is today or in the future, or if unparseable.
+
+        Args:
+            date_str: ISO date string (YYYY-MM-DD) or None
+            today: Current date for comparison
+
+        Returns:
+            True if the event should be included (future or unknown date)
+        """
+        if not date_str:
+            return True
+        try:
+            return datetime.strptime(date_str, "%Y-%m-%d").date() >= today.date()
+        except ValueError:
+            return True  # Include events with unparseable dates rather than silently drop them
+
+    @staticmethod
+    def _build_event_dict(doc: str, metadata: Dict[str, Any], distance: Optional[float] = None) -> Dict[str, Any]:
+        """Build a standardized event dictionary from Qdrant result fields.
+
+        Args:
+            doc: Event description text (the stored document)
+            metadata: Qdrant point payload
+            distance: Cosine distance from search query (None for direct lookups)
+
+        Returns:
+            Normalized event dict with consistent keys across all callers.
+        """
+        event: Dict[str, Any] = {
+            "title": metadata.get("title", "Untitled Event"),
+            "description": doc,
+            "url": metadata.get("url", ""),
+            "event_type": metadata.get("event_type", "other"),
+            "date": metadata.get("date"),
+            "time": metadata.get("time"),
+            "location": metadata.get("location"),
+            "org_name": metadata.get("org_name", ""),
+            "platform_id": metadata.get("platform_id", ""),
+            "source": metadata.get("source", "unknown"),
+        }
+        if distance is not None:
+            event["distance"] = distance
+        return event
 
     def add_events(self, events: List[Dict[str, Any]], platform_id: str) -> int:
         """
@@ -173,35 +219,14 @@ class EventStore:
 
             # Format results and filter for future events only
             events = []
-            today = datetime.now().date()
+            now = datetime.now()
 
             if results['documents'] and results['documents'][0]:
                 for i, doc in enumerate(results['documents'][0]):
                     metadata = results['metadatas'][0][i] if results['metadatas'] else {}
-
-                    # Parse event date
-                    date_str = metadata.get('date')
-                    event_date = None
-                    if date_str:
-                        try:
-                            event_date = datetime.strptime(date_str, '%Y-%m-%d').date()
-                        except ValueError:
-                            pass  # Keep event if date can't be parsed
-
-                    # Only include future events (today or later)
-                    if event_date is None or event_date >= today:
-                        events.append({
-                            'title': metadata.get('title', 'Untitled Event'),
-                            'description': doc,
-                            'url': metadata.get('url', ''),
-                            'event_type': metadata.get('event_type', 'other'),
-                            'date': metadata.get('date'),
-                            'location': metadata.get('location'),
-                            'org_name': metadata.get('org_name', ''),
-                            'platform_id': metadata.get('platform_id', ''),
-                            'source': metadata.get('source', 'unknown'),
-                            'distance': results['distances'][0][i] if results['distances'] else None
-                        })
+                    if self._is_future_event(metadata.get('date'), now):
+                        distance = results['distances'][0][i] if results['distances'] else None
+                        events.append(self._build_event_dict(doc, metadata, distance))
 
             logger.info(f"Found {len(events)} future event(s) for query: {query}")
             return events
@@ -231,36 +256,13 @@ class EventStore:
             )
 
             events = []
-            today = datetime.now().date()
+            now = datetime.now()
 
             if results['documents'] and results['documents'][0]:
                 for i, doc in enumerate(results['documents'][0]):
                     metadata = results['metadatas'][0][i] if results['metadatas'] else {}
-
-                    # Parse event date
-                    date_str = metadata.get('date')
-                    event_date = None
-                    if date_str:
-                        try:
-                            event_date = datetime.strptime(date_str, '%Y-%m-%d').date()
-                        except ValueError:
-                            pass  # Keep event if date can't be parsed
-
-                    # Only include future events (today or later)
-                    if event_date is None or event_date >= today:
-                        events.append({
-                            'title': metadata.get('title', 'Untitled Event'),
-                            'description': doc,
-                            'url': metadata.get('url', ''),
-                            'event_type': metadata.get('event_type', 'other'),
-                            'date': metadata.get('date'),
-                            'location': metadata.get('location'),
-                            'org_name': metadata.get('org_name', ''),
-                            'platform_id': platform_id,
-                            'source': metadata.get('source', 'unknown')
-                        })
-
-                        # Stop if we've collected enough future events
+                    if self._is_future_event(metadata.get('date'), now):
+                        events.append(self._build_event_dict(doc, metadata))
                         if len(events) >= limit:
                             break
 

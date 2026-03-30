@@ -74,8 +74,12 @@ MIN_SIMILARITY_THRESHOLD = 0.3  # Include loosely related results
 
 # Generation Configuration
 MAX_TOKENS = 1000
+CHAT_MAX_TOKENS = 512        # Tokens for chatbot responses (faster, cheaper)
 TEMPERATURE = 0.7
 CONVERSATION_MEMORY_TURNS = 5  # Last N turns to remember
+MAX_QUERY_LENGTH = 1000      # Max characters in a user query
+EVENT_SEARCH_RESULTS = 5     # Events to fetch per query
+QDRANT_LOCAL_PATH = "./qdrant_storage"  # Local Qdrant storage path
 
 # LLM-specific Token Limits
 class LLMTokenLimits:

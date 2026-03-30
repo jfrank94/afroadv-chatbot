@@ -7,8 +7,11 @@ Now includes event search capability and smart context handling!
 
 from typing import List, Dict, Optional
 import logging
+import threading
+import config
 from src.core.retriever import Retriever
-from src.infrastructure.llm import LLMProvider, create_rag_prompt
+from src.utils.url_utils import is_homepage_url
+from src.infrastructure.llm import LLMProvider
 from src.events.event_store import EventStore
 from src.analytics import QueryLogger
 from src.core.conversation import (
@@ -84,6 +87,7 @@ class RAGChatbot:
 
         # Legacy history for backward compatibility (deprecated)
         self.history: List[Dict[str, str]] = []
+        self._history_lock = threading.Lock()
 
         logger.info(f"RAG Chatbot initialized (retrieve top-{n_results}, memory={conversation_memory} turns, events={'enabled' if self.enable_events else 'disabled'}, context_aware=True)")
 
@@ -122,15 +126,14 @@ class RAGChatbot:
                         response=result["response"],
                         error="empty_query"
                     )
-                except Exception:
-                    pass
+                except Exception as e:
+                    logger.warning(f"Analytics logging failed: {e}")
             return result
 
         # Validate query length (prevent abuse and excessive token usage)
-        MAX_QUERY_LENGTH = 1000
-        if len(query) > MAX_QUERY_LENGTH:
+        if len(query) > config.MAX_QUERY_LENGTH:
             return {
-                "response": f"Your question is too long ({len(query)} characters). Please keep it under {MAX_QUERY_LENGTH} characters.",
+                "response": f"Your question is too long ({len(query)} characters). Please keep it under {config.MAX_QUERY_LENGTH} characters.",
                 "sources": [],
                 "events": [],
                 "retrieved": 0,
@@ -178,7 +181,7 @@ class RAGChatbot:
                 future_events = executor.submit(
                     self.event_store.search_events,
                     query=query,
-                    n_results=5
+                    n_results=config.EVENT_SEARCH_RESULTS
                 )
 
             # Wait for platforms first (required for response)
@@ -223,12 +226,11 @@ class RAGChatbot:
             response_text = self._handle_no_results(query)
 
             # Add to conversation history even when no results
-            self.history.append({"role": "user", "content": query})
-            self.history.append({"role": "assistant", "content": response_text})
-
-            # Trim history to conversation_memory turns
-            if len(self.history) > self.conversation_memory * 2:
-                self.history = self.history[-(self.conversation_memory * 2):]
+            with self._history_lock:
+                self.history.append({"role": "user", "content": query})
+                self.history.append({"role": "assistant", "content": response_text})
+                if len(self.history) > self.conversation_memory * 2:
+                    self.history = self.history[-(self.conversation_memory * 2):]
 
             return {
                 "response": response_text,
@@ -242,7 +244,7 @@ class RAGChatbot:
         # Step 5: Generate response with LLM (reduced max_tokens for speed)
         t5 = time.time()
         messages = self._create_prompt_with_events(query, platforms, events)
-        response_text = self.llm.generate(messages, max_tokens=512, temperature=0.7)
+        response_text = self.llm.generate(messages, max_tokens=config.CHAT_MAX_TOKENS, temperature=config.TEMPERATURE)
         logger.info(f"⏱️  LLM generation: {(time.time()-t5)*1000:.0f}ms")
         logger.info(f"⏱️  TOTAL: {(time.time()-start_time)*1000:.0f}ms")
 
@@ -260,10 +262,11 @@ class RAGChatbot:
         )
 
         # Maintain legacy history for backward compatibility
-        self.history.append({"role": "user", "content": query})
-        self.history.append({"role": "assistant", "content": response_text})
-        if len(self.history) > self.conversation_memory * 2:
-            self.history = self.history[-(self.conversation_memory * 2):]
+        with self._history_lock:
+            self.history.append({"role": "user", "content": query})
+            self.history.append({"role": "assistant", "content": response_text})
+            if len(self.history) > self.conversation_memory * 2:
+                self.history = self.history[-(self.conversation_memory * 2):]
 
         # Step 6: Build response
         result = {
@@ -343,34 +346,12 @@ class RAGChatbot:
             for i, event in enumerate(events, 1):
                 event_url = event.get('url', '')
 
-                # Check if event URL is just the org homepage (no specific event page found)
-                # Look for platform with matching org name to get their website
-                org_homepage = None
-                for p in platforms:
-                    if p['name'] == event.get('org_name'):
-                        org_homepage = p['website']
-                        break
-
-                # Normalize URLs for comparison (remove protocol, www, trailing slashes)
-                def normalize_url(url):
-                    if not url:
-                        return ""
-                    normalized = url.lower()
-                    normalized = normalized.replace('https://', '').replace('http://', '')
-                    normalized = normalized.replace('www.', '')
-                    normalized = normalized.rstrip('/')
-                    return normalized
-
-                # Check if event URL is just the org homepage (no specific event page path)
-                event_url_normalized = normalize_url(event_url)
-                org_homepage_normalized = normalize_url(org_homepage) if org_homepage else ""
-
-                # URL is considered homepage if it's exactly the same as org homepage
-                # (not just same domain - we want to allow /events, /programs, etc.)
-                is_homepage = (
-                    org_homepage_normalized and
-                    event_url_normalized == org_homepage_normalized
+                # Find the org homepage to detect when an event URL is just the base website
+                org_homepage = next(
+                    (p['website'] for p in platforms if p['name'] == event.get('org_name')),
+                    None
                 )
+                homepage = is_homepage_url(event_url, org_homepage)
 
                 event_context += (
                     f"{i}. **{event['title']}**\n"
@@ -381,7 +362,7 @@ class RAGChatbot:
                 )
 
                 # Add URL field - only include actual URL if it's not just the homepage
-                if is_homepage:
+                if homepage:
                     event_context += f"   Event URL: [BASE WEBSITE ONLY - {org_homepage}]\n\n"
                 else:
                     event_context += f"   Event URL: {event_url}\n\n"
@@ -513,7 +494,8 @@ class RAGChatbot:
 
     def clear_history(self):
         """Clear conversation history."""
-        self.history = []
+        with self._history_lock:
+            self.history = []
         self.memory.clear()
         logger.info("Conversation history cleared")
 
