@@ -236,7 +236,7 @@ class EventStore:
                         distance = results['distances'][0][i] if results['distances'] else None
                         events.append(self._build_event_dict(doc, metadata, distance))
 
-            # Re-rank: location-matching events first, others after
+            # Re-rank: location-matching events first, then slice to n_results
             if location_hint and events:
                 hint_terms = location_hint.lower().split()
                 def location_score(event: Dict[str, Any]) -> int:
@@ -244,6 +244,7 @@ class EventStore:
                     return sum(1 for term in hint_terms if term in loc)
                 events.sort(key=location_score, reverse=True)
 
+            events = events[:n_results]
             logger.info(f"Found {len(events)} future event(s) for query: {query}")
             return events
 
