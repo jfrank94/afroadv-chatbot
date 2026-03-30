@@ -2,7 +2,7 @@
 # Pinned versions for reproducibility. Update intentionally, not automatically.
 
 # UI Framework
-streamlit==1.43.0  # Requires 1.31.0+ for st.page_link()
+streamlit>=1.31.0,<2.0.0  # Requires 1.31.0+ for st.page_link()
 
 # Embeddings (local)
 sentence-transformers==3.4.0
@@ -17,7 +17,7 @@ anthropic==0.75.0      # For Claude Haiku (primary)
 
 # Data handling
 pandas==2.2.3
-openpyxl==3.1.5        # For reading Excel files
+openpyxl>=3.1.0,<4.0.0  # For reading Excel files
 
 # Configuration & Environment
 python-dotenv==1.2.1
