@@ -24,6 +24,53 @@ from src.core.conversation import (
 logger = logging.getLogger(__name__)
 
 
+# Common city nickname/abbreviation → full name(s) for event location matching
+_CITY_ALIASES: dict[str, str] = {
+    "nyc": "New York City New York NY",
+    "new york city": "New York City New York NY",
+    "la": "Los Angeles California CA",
+    "los angeles": "Los Angeles California CA",
+    "sf": "San Francisco California CA",
+    "san francisco": "San Francisco California CA",
+    "dc": "Washington DC District of Columbia",
+    "washington dc": "Washington DC District of Columbia",
+    "dmv": "Washington DC Maryland Virginia",
+    "chi": "Chicago Illinois IL",
+    "chicago": "Chicago Illinois IL",
+    "atl": "Atlanta Georgia GA",
+    "atlanta": "Atlanta Georgia GA",
+    "miami": "Miami Florida FL",
+    "seattle": "Seattle Washington WA",
+    "denver": "Denver Colorado CO",
+    "austin": "Austin Texas TX",
+    "houston": "Houston Texas TX",
+    "dallas": "Dallas Texas TX",
+    "boston": "Boston Massachusetts MA",
+    "philly": "Philadelphia Pennsylvania PA",
+    "philadelphia": "Philadelphia Pennsylvania PA",
+    "portland": "Portland Oregon OR",
+}
+
+
+def _expand_location_query(query: str) -> str:
+    """Expand city nicknames in a query to include full location names.
+
+    This improves semantic matching against event location fields which
+    store values like 'Brooklyn, NY' or 'New York, NY'.
+
+    Example:
+        'events in NYC' → 'events in NYC New York City New York NY'
+    """
+    query_lower = query.lower()
+    expansions = []
+    for alias, expansion in _CITY_ALIASES.items():
+        if alias in query_lower:
+            expansions.append(expansion)
+    if expansions:
+        return f"{query} {' '.join(expansions)}"
+    return query
+
+
 # Event-related keywords for query detection
 EVENT_KEYWORDS = [
     'event', 'conference', 'workshop', 'meetup', 'webinar',
@@ -178,9 +225,10 @@ class RAGChatbot:
 
             future_events = None
             if self.enable_events:
+                event_query = _expand_location_query(query)
                 future_events = executor.submit(
                     self.event_store.search_events,
-                    query=query,
+                    query=event_query,
                     n_results=config.EVENT_SEARCH_RESULTS
                 )
 
