@@ -22,6 +22,11 @@ openpyxl>=3.1.0,<4.0.0  # For reading Excel files
 # Configuration & Environment
 python-dotenv==1.2.1
 
+# Enrichment agent
+httpx==0.27.0          # HTTP client for URL checks and Tavily calls
+tenacity==8.2.3        # Retry logic for flaky network calls
+instructor==1.3.3      # Structured LLM output via Pydantic (wraps anthropic)
+
 # Progress bars
 tqdm==4.67.1
 

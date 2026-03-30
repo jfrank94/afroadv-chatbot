@@ -90,6 +90,8 @@ data/url_updates.json
 data/pending_submissions.json
 data/rejected_submissions.json
 data/analytics.jsonl
+data/enrichment_progress.json
+data/platforms.json.enrich_backup
 pytest.ini
 htmlcov/
 CLAUDE.md

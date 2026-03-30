@@ -7,14 +7,13 @@ Provides reusable infrastructure components:
 - Embeddings: Sentence transformers with singleton pattern
 """
 
-from .llm import LLMProvider, create_rag_prompt
+from .llm import LLMProvider
 from .vectordb import QdrantVectorDB
 from .embeddings import EmbeddingModel, prepare_platform_text
 from .embedding_singleton import EmbeddingModelSingleton, get_embedding_model
 
 __all__ = [
     'LLMProvider',
-    'create_rag_prompt',
     'QdrantVectorDB',
     'EmbeddingModel',
     'prepare_platform_text',

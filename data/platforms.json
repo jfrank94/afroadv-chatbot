@@ -266,8 +266,9 @@
       "founders"
     ],
     "states": [
-      "NY",
-      "GA"
+      "CA",
+      "GA",
+      "NY"
     ]
   },
   {
@@ -322,7 +323,9 @@
       "innovation",
       "entrepreneurship"
     ],
-    "states": []
+    "states": [
+      "TX"
+    ]
   },
   {
     "id": "tech_we_build_black_014",
@@ -331,7 +334,7 @@
     "category": "Community",
     "focus_area": "Black Software Engineers",
     "description": "Tech community for Black software engineers to share ideas, work on code, and discuss the industry.",
-    "website": "https://www.webuildblack.com",
+    "website": "https://webuildblack.com",
     "founded": "Not specified",
     "community_size": "Not disclosed",
     "key_programs": "Weekly meetups, Slack conversations, collaborative coding",
@@ -508,7 +511,8 @@
       "gender gap"
     ],
     "states": [
-      "ALL"
+      "ALL",
+      "NY"
     ]
   },
   {
@@ -583,7 +587,7 @@
     "description": "National network celebrating and inspiring Black connections and leadership in nature through outdoor recreation.",
     "website": "outdoorafro.org",
     "founded": "2009",
-    "community_size": "100+ volunteer leaders in 60 cities, 60,000+ participants annually",
+    "community_size": "30+ state chapters",
     "key_programs": "Hiking, kayaking, birding, fishing, swimming, leadership training (OALT), volunteer programs",
     "geographic_focus": "United States (32 states, 60+ cities)",
     "tags": [
@@ -644,7 +648,7 @@
     "description": "BIPOC travel lifestyle brand and community - 'Digital Green Book' for travelers of color. Founded by Evita Robinson.",
     "website": "https://nomadnesstraveltribe.com",
     "founded": "2011",
-    "community_size": "20,000+ members, 100,000+ passport stamps",
+    "community_size": "4,000+ members",
     "key_programs": "Online community, group trips, Audacity Fest, meetups worldwide",
     "geographic_focus": "Global",
     "tags": [
@@ -858,7 +862,9 @@
       "outdoors",
       "indigenous"
     ],
-    "states": []
+    "states": [
+      "TN"
+    ]
   },
   {
     "id": "outdoor_natives_outdoors_013",
@@ -934,7 +940,9 @@
     "states": [
       "CA",
       "CO",
+      "MI",
       "NY",
+      "UT",
       "WA"
     ]
   },
@@ -981,7 +989,10 @@
       "outdoors",
       "hiking"
     ],
-    "states": []
+    "states": [
+      "CO",
+      "WA"
+    ]
   },
   {
     "id": "outdoor_qpoc_hikers_018",
@@ -1026,7 +1037,9 @@
       "winter sports",
       "scholarships"
     ],
-    "states": []
+    "states": [
+      "CO"
+    ]
   },
   {
     "id": "outdoor_team_blackstar_skydivers_020",
@@ -1077,7 +1090,7 @@
     "description": "Community for BIPOC hunters to connect and share experiences.",
     "website": "https://huntersofcolor.org",
     "founded": "Not specified",
-    "community_size": "Not disclosed",
+    "community_size": "14 chapters and hundreds of members from 47 states",
     "key_programs": "Hunting community, education, representation",
     "geographic_focus": "United States",
     "tags": [
@@ -1086,7 +1099,57 @@
       "outdoors",
       "conservation"
     ],
-    "states": []
+    "states": [
+      "AL",
+      "AR",
+      "AZ",
+      "CA",
+      "CO",
+      "CT",
+      "DE",
+      "FL",
+      "GA",
+      "HI",
+      "IA",
+      "ID",
+      "IL",
+      "IN",
+      "KS",
+      "KY",
+      "LA",
+      "MA",
+      "MD",
+      "ME",
+      "MI",
+      "MN",
+      "MO",
+      "MS",
+      "MT",
+      "NC",
+      "ND",
+      "NE",
+      "NH",
+      "NJ",
+      "NM",
+      "NV",
+      "NY",
+      "OH",
+      "OK",
+      "OR",
+      "PA",
+      "RI",
+      "SC",
+      "SD",
+      "TN",
+      "TX",
+      "UT",
+      "VA",
+      "VT",
+      "WA",
+      "WI",
+      "WV",
+      "WY"
+    ]
   },
   {
     "id": "outdoor_latino_community_fund_latinos_in_tech_washington_024",
@@ -1133,6 +1196,7 @@
     "states": [
       "GA",
       "NC",
+      "OR",
       "SC",
       "TN",
       "VA"
