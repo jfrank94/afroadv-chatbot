@@ -188,16 +188,21 @@ class EventStore:
         query: str,
         platform_id: Optional[str] = None,
         event_type: Optional[str] = None,
-        n_results: int = 5
+        n_results: int = 5,
+        location_hint: Optional[str] = None,
     ) -> List[Dict[str, Any]]:
         """
-        Search events by semantic similarity.
+        Search events by semantic similarity, with optional location re-ranking.
+
+        When location_hint is provided, fetches 3x more results than needed and
+        re-ranks so events whose location field matches the hint appear first.
 
         Args:
             query: Search query
             platform_id: Filter by specific platform (optional)
             event_type: Filter by event type (optional)
             n_results: Number of results to return
+            location_hint: City/state string to prioritize (e.g. "New York NY NYC")
 
         Returns:
             List of event dictionaries with metadata
@@ -210,10 +215,13 @@ class EventStore:
             if event_type:
                 filter_dict['event_type'] = event_type
 
+            # Fetch extra candidates when location re-ranking is needed
+            fetch_n = n_results * 3 if location_hint else n_results
+
             # Search Qdrant collection
             results = self.vector_db.search(
                 query=query,
-                n_results=n_results,
+                n_results=fetch_n,
                 filter_dict=filter_dict if filter_dict else None
             )
 
@@ -227,6 +235,14 @@ class EventStore:
                     if self._is_future_event(metadata.get('date'), now):
                         distance = results['distances'][0][i] if results['distances'] else None
                         events.append(self._build_event_dict(doc, metadata, distance))
+
+            # Re-rank: location-matching events first, others after
+            if location_hint and events:
+                hint_terms = location_hint.lower().split()
+                def location_score(event: Dict[str, Any]) -> int:
+                    loc = (event.get('location') or '').lower()
+                    return sum(1 for term in hint_terms if term in loc)
+                events.sort(key=location_score, reverse=True)
 
             logger.info(f"Found {len(events)} future event(s) for query: {query}")
             return events

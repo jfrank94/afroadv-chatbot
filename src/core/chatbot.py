@@ -52,14 +52,15 @@ _CITY_ALIASES: dict[str, str] = {
 }
 
 
-def _expand_location_query(query: str) -> str:
-    """Expand city nicknames in a query to include full location names.
+def _expand_location_query(query: str) -> tuple[str, Optional[str]]:
+    """Expand city nicknames in a query and extract a location hint for re-ranking.
 
-    This improves semantic matching against event location fields which
-    store values like 'Brooklyn, NY' or 'New York, NY'.
+    Returns:
+        (expanded_query, location_hint) where location_hint is the expanded
+        city string if a known city was found, else None.
 
     Example:
-        'events in NYC' → 'events in NYC New York City New York NY'
+        'events in NYC' → ('events in NYC New York City New York NY', 'New York City New York NY')
     """
     query_lower = query.lower()
     expansions = []
@@ -67,8 +68,9 @@ def _expand_location_query(query: str) -> str:
         if alias in query_lower:
             expansions.append(expansion)
     if expansions:
-        return f"{query} {' '.join(expansions)}"
-    return query
+        combined = " ".join(expansions)
+        return f"{query} {combined}", combined
+    return query, None
 
 
 # Event-related keywords for query detection
@@ -225,11 +227,12 @@ class RAGChatbot:
 
             future_events = None
             if self.enable_events:
-                event_query = _expand_location_query(query)
+                event_query, location_hint = _expand_location_query(query)
                 future_events = executor.submit(
                     self.event_store.search_events,
                     query=event_query,
-                    n_results=config.EVENT_SEARCH_RESULTS
+                    n_results=config.EVENT_SEARCH_RESULTS,
+                    location_hint=location_hint
                 )
 
             # Wait for platforms first (required for response)
