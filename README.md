@@ -39,18 +39,26 @@ streamlit run app.py
 
 ## How It Works
 
-**RAG Pipeline**: User query → Hybrid search (vector + keyword) → LLM generates answer with sources
+**Query Routing**: Every query is classified first — simple queries go through the RAG pipeline, complex ones (comparative, superlative, multi-step) are handled by a LangGraph ReAct agent that iteratively searches and synthesizes before responding.
+
+**RAG Pipeline**: User query → Classify → Hybrid search (vector + keyword) → LLM generates answer with sources
+
+**Agentic Pipeline**: User query → Classify → LangGraph ReAct loop (search_platforms + search_events tools) → Synthesized response
 
 **Tech Stack**:
 - **Frontend**: Streamlit chat interface
 - **Search**: Qdrant vector database + sentence-transformers embeddings
 - **LLM**: Claude Haiku (primary) → Cerebras (backup) → DeepSeek (fallback)
+- **Agent**: LangGraph ReAct loop with Anthropic native tool use
 - **Events**: Auto-discovered via Tavily web search + RSS parsing
 
-**Example**:
+**Examples**:
 ```
 You: "Black women in tech communities?"
 Bot: Returns Black Women Talk Tech, /dev/color, BIT, etc. with descriptions
+
+You: "Compare Techqueria and NSBE"
+Bot: Agent searches both platforms, synthesizes a comparison
 ```
 
 ---
@@ -93,9 +101,13 @@ git push origin main
 ├── data/platforms.json      # 48 platforms (source of truth)
 ├── src/
 │   ├── core/               # Core RAG components
-│   │   ├── chatbot.py     # RAG orchestration
+│   │   ├── chatbot.py     # RAG orchestration + query routing
 │   │   ├── retriever.py   # Hybrid search
 │   │   └── conversation.py # Memory management
+│   ├── agents/             # Agentic query handling
+│   │   ├── query_classifier.py  # Routes simple vs. complex queries
+│   │   ├── complex_agent.py     # LangGraph ReAct agent
+│   │   └── agent_tools.py       # Tool schemas + executor
 │   ├── infrastructure/     # Infrastructure services
 │   │   ├── llm.py         # Multi-provider LLM
 │   │   ├── vectordb.py    # Vector DB wrapper

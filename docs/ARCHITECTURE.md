@@ -15,13 +15,31 @@
 ┌──────────────────────────────────────────────────────────────────────┐
 │                       CHATBOT ORCHESTRATION                          │
 │                      (src/core/chatbot.py)                           │
-│  • Routes queries to platform or event search                        │
-│  • Manages conversation context                                      │
-│  • Formats responses with sources                                    │
-└─────────┬────────────────────────────────────────────────────────────┘
-          │
-          ├─────────────────────────┬────────────────────────────────┐
-          ▼                         ▼                                ▼
+│  • Manages conversation context and memory                           │
+│  • Classifies query complexity and routes accordingly                │
+└──────────────────┬──────────────────────────┬────────────────────────┘
+                   │                          │
+         simple query                   complex query
+         (RAG path)                     (agent path)
+                   │                          │
+                   ▼                          ▼
+┌──────────────────────────┐  ┌───────────────────────────────────────┐
+│     SIMPLE RAG PATH      │  │         COMPLEX AGENT PATH            │
+│                          │  │   (src/agents/complex_agent.py)       │
+│  Parallel search:        │  │                                       │
+│  • Platform retrieval    │  │  LangGraph ReAct loop:                │
+│  • Event search          │  │  • call_model → tool_use?             │
+│  • LLM generates answer  │  │    → execute_tools → call_model → ... │
+│                          │  │  • Tools: search_platforms,           │
+│                          │  │    search_events, web_search          │
+│                          │  │  • MAX_ITERATIONS=5 safety cap        │
+└──────────┬───────────────┘  └──────────────────┬────────────────────┘
+           │                                     │
+           └─────────────────┬───────────────────┘
+                             ▼
+          ┌──────────────────────────────────────────────────┐
+          ├─────────────────────────┬────────────────────────┤
+          ▼                         ▼                        ▼
 ┌──────────────────────┐  ┌──────────────────────┐  ┌─────────────────────┐
 │   PLATFORM SEARCH    │  │    EVENT SEARCH      │  │   EVENT DISCOVERY   │
 │ (src/core/retriever) │  │(src/events/event_    │  │(src/events/smart_   │
@@ -84,9 +102,17 @@
 
 ## Data Flow
 
-### Platform Query
+### Simple Query (RAG path)
 ```
-User Query → Embed → Hybrid Search → Retrieve Top-K → LLM → Response
+User Query → Classify (simple) → Embed → Hybrid Search → Retrieve Top-K → LLM → Response
+```
+
+### Complex Query (agent path)
+```
+User Query → Classify (complex) → LangGraph ReAct Loop:
+  call_model → tool_use → execute_tools → call_model → ... → end
+  Tools: search_platforms | search_events | web_search
+→ Synthesized Response
 ```
 
 ### Event Query
@@ -106,9 +132,12 @@ Platform URL → Web Search → RSS/LLM Extraction → Validate → Store in Qdr
 | Component | Purpose | Technology |
 |-----------|---------|------------|
 | **app.py** | Streamlit chat UI | Streamlit 1.28+ |
-| **src/core/chatbot.py** | RAG orchestration | Python |
+| **src/core/chatbot.py** | RAG orchestration + query routing | Python |
 | **src/core/retriever.py** | Hybrid search | Qdrant + sentence-transformers |
 | **src/core/conversation.py** | Memory management | Python |
+| **src/agents/query_classifier.py** | Classify simple vs. complex queries | Python (regex) |
+| **src/agents/complex_agent.py** | LangGraph ReAct agent | LangGraph + Anthropic tool use |
+| **src/agents/agent_tools.py** | Tool schemas + executor factory | Anthropic tool use |
 | **src/infrastructure/llm.py** | Multi-provider LLM | Claude, Cerebras, DeepSeek |
 | **src/infrastructure/vectordb.py** | Vector DB wrapper | qdrant-client |
 | **src/infrastructure/embeddings.py** | Text embeddings | sentence-transformers |
@@ -137,7 +166,17 @@ Platform URL → Web Search → RSS/LLM Extraction → Validate → Store in Qdr
 - Exponential backoff (1s, 2s, 4s)
 - **99.9% uptime** via redundancy
 
-### 4. Future-Only Events
+### 4. LangGraph ReAct Agent
+**Problem**: Single-pass RAG can't handle comparative, superlative, or multi-step queries well
+**Solution**: A regex classifier routes complex queries to a LangGraph ReAct loop
+- Classifier fires on patterns: `compare`, `vs`, `most active`, `top 3`, `in NYC... events`, etc.
+- Agent calls `search_platforms`, `search_events`, and `web_search` tools iteratively
+- Anthropic native tool use (not LangChain): `tool_use` stop_reason → tool results in `user` role
+- Custom `_append` reducer (not `add_messages`) keeps state as plain JSON-serializable dicts
+- MAX_ITERATIONS=5 cap prevents runaway loops
+- Falls back to simple RAG if agent raises an exception
+
+### 5. Future-Only Events
 - Filter: `event.date >= today`
 - Auto-cleanup of expired events
 - Better UX (only actionable events)
