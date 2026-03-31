@@ -32,7 +32,7 @@ streamlit run app.py
 ```
 
 **Get free API keys**:
-- [Claude](https://console.anthropic.com) - Primary LLM
+- [Claude](https://console.anthropic.com) - LLM
 - [Tavily](https://tavily.com) - Event discovery (1000 searches/month free)
 
 ---
@@ -48,7 +48,7 @@ streamlit run app.py
 **Tech Stack**:
 - **Frontend**: Streamlit chat interface
 - **Search**: Qdrant vector database + sentence-transformers embeddings
-- **LLM**: Claude Haiku (primary) → Cerebras (backup) → DeepSeek (fallback)
+- **LLM**: Claude Haiku
 - **Agent**: LangGraph ReAct loop with Anthropic native tool use
 - **Events**: Auto-discovered via Tavily web search + RSS parsing
 
@@ -130,10 +130,6 @@ git push origin main
 ANTHROPIC_API_KEY=sk-ant-...
 TAVILY_API_KEY=...
 
-# Optional (backup LLMs)
-CEREBRAS_API_KEY=...
-DEEPSEEK_API_KEY=...
-
 # For production deployment
 USE_QDRANT_CLOUD=false
 QDRANT_URL=https://your-cluster.cloud.qdrant.io:6333
@@ -206,7 +202,7 @@ QDRANT_API_KEY=...
 
 | Tier | Monthly Cost | Usage |
 |------|-------------|--------|
-| **Free** | $0 | Use Cerebras LLM + free tiers |
+| **Free** | $0 | Qdrant Cloud + Tavily free tiers |
 | **Prod** | $2-5 | Claude Haiku with 90% caching |
 
 **Scaling**: $0 (100 users) → $2-5 (1K users) → $20-50 (10K users)
@@ -223,6 +219,6 @@ MIT License - see [LICENSE](LICENSE)
 
 Built with care to uplift and connect communities of color in tech and outdoor spaces.
 
-**Powered by**: [Streamlit](https://streamlit.io) • [Qdrant](https://qdrant.tech) • [Claude](https://anthropic.com) • [Cerebras](https://cerebras.ai) • [Tavily](https://tavily.com)
+**Powered by**: [Streamlit](https://streamlit.io) • [Qdrant](https://qdrant.tech) • [Claude](https://anthropic.com) • [Tavily](https://tavily.com)
 
 **Made with 💚 for communities of color**
