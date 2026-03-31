@@ -44,12 +44,18 @@ class EventStore:
         # Use provided vector DB or create new one
         self.vector_db: QdrantVectorDB
         if vector_db is not None:
-            # Share the client but use a different collection
-            self.vector_db = vector_db
-
-            # Update collection_name and ensure collection exists
-            self.vector_db.collection_name = collection_name
-            self.vector_db._setup_collection()  # Create events collection if needed
+            # Share the underlying Qdrant client and embedding model, but give
+            # EventStore its OWN QdrantVectorDB wrapper with collection_name="events".
+            # Do NOT mutate vector_db.collection_name — that would break the retriever
+            # because they share the same object.
+            events_vdb = QdrantVectorDB.__new__(QdrantVectorDB)
+            events_vdb.collection_name = collection_name
+            events_vdb.client = vector_db.client
+            events_vdb.embedding_model = vector_db.embedding_model
+            events_vdb.embedding_model_name = vector_db.embedding_model_name
+            events_vdb.embedding_dim = vector_db.embedding_dim
+            events_vdb._setup_collection()  # Create events collection if needed
+            self.vector_db = events_vdb
 
             logger.info(f"✓ EventStore using shared Qdrant client with collection '{collection_name}'")
         else:
