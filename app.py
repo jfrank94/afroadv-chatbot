@@ -5,10 +5,13 @@ RAG-powered chatbot to help discover platforms for People of Color
 in tech and outdoor/travel spaces.
 """
 
+import logging
 import streamlit as st
 from src.core.chatbot import RAGChatbot
 from src.analytics import FeedbackLogger
 import config
+
+logger = logging.getLogger(__name__)
 
 # Page configuration
 st.set_page_config(
@@ -818,6 +821,33 @@ def main():
                 "sources": result.get("sources", []),
                 "events": result.get("events", [])
             })
+
+        # Show feedback form for the response we just added
+        new_msg_idx = len(st.session_state.messages) - 1
+        with st.form(key=f"feedback_form_{new_msg_idx}", clear_on_submit=True):
+            cols = st.columns([1, 1, 8])
+            with cols[0]:
+                thumbs_up = st.form_submit_button("👍")
+            with cols[1]:
+                thumbs_down = st.form_submit_button("👎")
+            comment = st.text_input(
+                "What would you improve or want to see? (optional)",
+                key=f"comment_{new_msg_idx}",
+                label_visibility="collapsed",
+                placeholder="What would you improve or want to see? (optional)",
+            )
+            if thumbs_up or thumbs_down:
+                rating = "👍" if thumbs_up else "👎"
+                try:
+                    feedback_logger.log_feedback(
+                        rating=rating,
+                        query=prompt,
+                        comment=comment,
+                    )
+                except Exception as e:
+                    logger.warning(f"Feedback logging failed: {e}")
+                st.session_state.feedback_submitted[new_msg_idx] = True
+                st.rerun()
 
     # Footer
     st.divider()
