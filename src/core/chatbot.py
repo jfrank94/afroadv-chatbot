@@ -138,7 +138,24 @@ class RAGChatbot:
         self.history: List[Dict[str, str]] = []
         self._history_lock = threading.Lock()
 
-        logger.info(f"RAG Chatbot initialized (retrieve top-{n_results}, memory={conversation_memory} turns, events={'enabled' if self.enable_events else 'disabled'}, context_aware=True)")
+        # Initialize complex query agent (LangGraph ReAct) if Anthropic client is available
+        self.query_classifier = None
+        self.complex_agent = None
+        if getattr(self.llm, 'anthropic_client', None):
+            try:
+                from src.agents.query_classifier import classify
+                from src.agents.complex_agent import ComplexQueryAgent
+                self.query_classifier = classify
+                self.complex_agent = ComplexQueryAgent(
+                    retriever=self.retriever,
+                    event_store=self.event_store,
+                    anthropic_client=self.llm.anthropic_client,
+                )
+                logger.info("Complex query agent enabled (LangGraph ReAct)")
+            except Exception as e:
+                logger.warning(f"Failed to initialize complex agent: {e}. All queries will use simple RAG.")
+
+        logger.info(f"RAG Chatbot initialized (retrieve top-{n_results}, memory={conversation_memory} turns, events={'enabled' if self.enable_events else 'disabled'}, context_aware=True, agent={'enabled' if self.complex_agent else 'disabled'})")
 
     def chat(
         self,
@@ -190,6 +207,11 @@ class RAGChatbot:
                 "error": "query_too_long",
                 "query": query[:100] + "..."  # Truncate for logging
             }
+
+        # Route complex queries (comparative, superlative, multi-step) to LangGraph agent
+        if self.query_classifier and self.complex_agent:
+            if self.query_classifier(query) == "complex":
+                return self._handle_complex_query(query)
 
         import time
         start_time = time.time()
@@ -342,6 +364,52 @@ class RAGChatbot:
                 logger.warning(f"Failed to log analytics: {e}")
 
         return result
+
+    def _handle_complex_query(self, query: str) -> dict:
+        """Run the LangGraph ReAct agent for multi-step queries.
+
+        Falls back to simple RAG if the agent raises an exception.
+        """
+        logger.info(f"Routing to complex agent: '{query[:80]}'")
+        try:
+            result = self.complex_agent.run(
+                query=query,
+                conversation_history=self.memory.format_for_llm(),
+            )
+            # Update conversation memory so follow-up questions have context
+            platform_names = [p['name'] for p in result.get('sources', [])]
+            self.memory.add_turn(
+                user_msg=query,
+                assistant_msg=result['response'],
+                platforms_returned=platform_names,
+            )
+            with self._history_lock:
+                self.history.append({"role": "user", "content": query})
+                self.history.append({"role": "assistant", "content": result['response']})
+                if len(self.history) > self.conversation_memory * 2:
+                    self.history = self.history[-(self.conversation_memory * 2):]
+            # Log analytics
+            if self.analytics_logger:
+                try:
+                    self.analytics_logger.log_query(
+                        query=query,
+                        response=result['response'],
+                        sources=result.get('sources', []),
+                        events=result.get('events', []),
+                    )
+                except Exception as e:
+                    logger.warning(f"Analytics logging failed: {e}")
+            return result
+        except Exception as e:
+            logger.error(f"Complex agent failed, falling back to simple RAG: {e}")
+            # Fall through to simple RAG by calling chat() logic directly; avoid recursion
+            # by temporarily disabling the classifier for this call
+            saved = self.query_classifier
+            self.query_classifier = None
+            try:
+                return self.chat(query)
+            finally:
+                self.query_classifier = saved
 
     def _is_event_query(self, query: str) -> bool:
         """
