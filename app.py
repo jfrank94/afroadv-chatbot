@@ -7,6 +7,7 @@ in tech and outdoor/travel spaces.
 
 import streamlit as st
 from src.core.chatbot import RAGChatbot
+from src.analytics import FeedbackLogger
 import config
 
 # Page configuration
@@ -517,6 +518,12 @@ st.markdown("""
 
 
 @st.cache_resource
+def initialize_feedback_logger():
+    """Initialize feedback logger (cached to share one instance)."""
+    return FeedbackLogger()
+
+
+@st.cache_resource
 def initialize_chatbot():
     """Initialize chatbot (cached to avoid reloading on every interaction)."""
     try:
@@ -695,9 +702,13 @@ def main():
         if st.button("🎉 Browse All Events", use_container_width=True):
             st.session_state.browse_all_events = True
 
-    # Initialize chat history in session state
+    # Initialize chat history and feedback state
     if "messages" not in st.session_state:
         st.session_state.messages = []
+    if "feedback_submitted" not in st.session_state:
+        st.session_state.feedback_submitted = {}  # {message_index: True}
+
+    feedback_logger = initialize_feedback_logger()
 
     # Handle "Browse All" actions
     if st.session_state.get("browse_all_platforms", False):
@@ -737,9 +748,47 @@ def main():
         st.session_state.browse_all_events = False
 
     # Display chat history
-    for message in st.session_state.messages:
+    for idx, message in enumerate(st.session_state.messages):
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
+
+        # Show feedback widget below each assistant message (not user messages)
+        if message["role"] == "assistant":
+            query_for_feedback = ""
+            # Find the preceding user message for context
+            if idx > 0 and st.session_state.messages[idx - 1]["role"] == "user":
+                query_for_feedback = st.session_state.messages[idx - 1]["content"]
+
+            already_submitted = st.session_state.feedback_submitted.get(idx, False)
+
+            if already_submitted:
+                st.caption("✓ Thanks for your feedback!")
+            else:
+                with st.form(key=f"feedback_form_{idx}", clear_on_submit=True):
+                    cols = st.columns([1, 1, 8])
+                    with cols[0]:
+                        thumbs_up = st.form_submit_button("👍")
+                    with cols[1]:
+                        thumbs_down = st.form_submit_button("👎")
+                    comment = st.text_input(
+                        "What would you improve or want to see? (optional)",
+                        key=f"comment_{idx}",
+                        label_visibility="collapsed",
+                        placeholder="What would you improve or want to see? (optional)",
+                    )
+
+                    if thumbs_up or thumbs_down:
+                        rating = "👍" if thumbs_up else "👎"
+                        try:
+                            feedback_logger.log_feedback(
+                                rating=rating,
+                                query=query_for_feedback,
+                                comment=comment,
+                            )
+                        except Exception as e:
+                            logger.warning(f"Feedback logging failed: {e}")
+                        st.session_state.feedback_submitted[idx] = True
+                        st.rerun()
 
     # Chat input
     if prompt := st.chat_input("Ask about PoC platforms..."):

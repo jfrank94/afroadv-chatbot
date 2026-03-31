@@ -1,29 +1,63 @@
 """
-Simple analytics logging for chatbot queries and responses.
+Analytics logging for chatbot queries.
 
-Logs queries to JSONL file for later analysis without any PII.
+Writes to Google Sheets (primary) with a local JSONL fallback if Sheets
+is unavailable or not configured.
 """
 
 import json
+import logging
 from pathlib import Path
 from datetime import datetime
 from typing import List, Dict, Any, Optional
 
+import config
+
+logger = logging.getLogger(__name__)
+
+# Header row for the queries sheet
+_QUERIES_HEADERS = [
+    "timestamp", "query_length", "query_keywords",
+    "num_sources", "platform_ids", "num_events",
+    "had_error", "error_type"
+]
+
+
+def _get_sheets_client():
+    """Return a gspread client using the service account credentials, or None."""
+    if not config.GOOGLE_SERVICE_ACCOUNT_JSON:
+        return None
+    try:
+        import gspread
+        creds = json.loads(config.GOOGLE_SERVICE_ACCOUNT_JSON)
+        return gspread.service_account_from_dict(creds)
+    except Exception as e:
+        logger.warning(f"Could not initialize Google Sheets client: {e}")
+        return None
+
+
+def _get_or_create_sheet(client, sheet_name: str):
+    """Open the analytics spreadsheet and return the named worksheet.
+
+    Creates the header row if the sheet is empty.
+    """
+    spreadsheet = client.open(config.ANALYTICS_SPREADSHEET_NAME)
+    worksheet = spreadsheet.worksheet(sheet_name)
+
+    # Add headers if the sheet is empty
+    if worksheet.row_count == 0 or not worksheet.row_values(1):
+        if sheet_name == config.ANALYTICS_QUERIES_SHEET:
+            worksheet.append_row(_QUERIES_HEADERS)
+    return worksheet
+
 
 class QueryLogger:
-    """Logs chatbot queries and responses for analytics."""
+    """Logs chatbot queries to Google Sheets with local JSONL fallback."""
 
     def __init__(self, log_file: Path = None):
-        """Initialize the query logger.
-
-        Args:
-            log_file: Path to JSONL log file (default: data/analytics.jsonl)
-        """
-        if log_file is None:
-            log_file = Path("data/analytics.jsonl")
-
-        self.log_file = log_file
+        self.log_file = log_file or Path("data/analytics.jsonl")
         self.log_file.parent.mkdir(exist_ok=True)
+        self._sheets_client = _get_sheets_client()
 
     def log_query(
         self,
@@ -31,29 +65,13 @@ class QueryLogger:
         response: str,
         sources: List[Dict[str, Any]] = None,
         events: List[Dict[str, Any]] = None,
-        error: Optional[str] = None
+        error: Optional[str] = None,
     ):
-        """Log a query and response.
+        """Log a query and response (no PII stored)."""
+        platform_ids = [s.get("id", s.get("name", "unknown")) for s in (sources or [])]
+        event_ids = [e.get("id", "unknown") for e in (events or [])]
 
-        Args:
-            query: User's question
-            response: Chatbot's response
-            sources: List of platform sources returned
-            events: List of events returned
-            error: Error message if query failed
-        """
-        # Extract just the platform names/IDs from sources (no PII)
-        platform_ids = []
-        if sources:
-            platform_ids = [s.get('id', s.get('name', 'unknown')) for s in sources]
-
-        # Extract event IDs
-        event_ids = []
-        if events:
-            event_ids = [e.get('id', 'unknown') for e in events]
-
-        # Create log entry
-        log_entry = {
+        row = {
             "timestamp": datetime.now().isoformat(),
             "query_length": len(query),
             "query_keywords": self._extract_keywords(query),
@@ -63,88 +81,41 @@ class QueryLogger:
             "num_events": len(events) if events else 0,
             "event_ids": event_ids,
             "had_error": error is not None,
-            "error_type": type(error).__name__ if error else None
+            "error_type": type(error).__name__ if error else None,
         }
 
-        # Append to JSONL file
-        with open(self.log_file, 'a') as f:
-            f.write(json.dumps(log_entry) + '\n')
+        self._write(row)
+
+    def _write(self, row: dict):
+        """Write a row to Google Sheets; fall back to JSONL on failure."""
+        if self._sheets_client:
+            try:
+                ws = _get_or_create_sheet(self._sheets_client, config.ANALYTICS_QUERIES_SHEET)
+                ws.append_row([
+                    row["timestamp"],
+                    row["query_length"],
+                    ", ".join(row["query_keywords"]),
+                    row["num_sources"],
+                    ", ".join(row["platform_ids"]),
+                    row["num_events"],
+                    str(row["had_error"]),
+                    row["error_type"] or "",
+                ])
+                return
+            except Exception as e:
+                logger.warning(f"Google Sheets write failed, falling back to JSONL: {e}")
+
+        # Local fallback
+        with open(self.log_file, "a") as f:
+            f.write(json.dumps(row) + "\n")
 
     def _extract_keywords(self, query: str) -> List[str]:
-        """Extract simple keywords from query (lowercased, common words removed)."""
-        # Common stop words to filter out
         stop_words = {
-            'a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'for', 'from',
-            'has', 'he', 'in', 'is', 'it', 'its', 'of', 'on', 'that', 'the',
-            'to', 'was', 'will', 'with', 'what', 'where', 'who', 'how', 'when',
-            'me', 'my', 'i', 'you', 'can', 'find', 'show', 'tell', 'give', 'get'
+            "a", "an", "and", "are", "as", "at", "be", "by", "for", "from",
+            "has", "he", "in", "is", "it", "its", "of", "on", "that", "the",
+            "to", "was", "will", "with", "what", "where", "who", "how", "when",
+            "me", "my", "i", "you", "can", "find", "show", "tell", "give", "get",
         }
-
-        # Extract words, lowercase, filter stop words
         words = query.lower().split()
-        keywords = [w.strip('?.,!') for w in words if w.strip('?.,!') not in stop_words]
-
-        # Return unique keywords (first 10 max)
+        keywords = [w.strip("?.,!") for w in words if w.strip("?.,!") not in stop_words]
         return list(dict.fromkeys(keywords))[:10]
-
-    def get_stats(self) -> Dict[str, Any]:
-        """Get basic analytics stats from the log file.
-
-        Returns:
-            Dictionary with analytics metrics
-        """
-        if not self.log_file.exists():
-            return {
-                "total_queries": 0,
-                "total_errors": 0,
-                "avg_sources_per_query": 0,
-                "avg_events_per_query": 0,
-                "top_keywords": []
-            }
-
-        # Read all log entries
-        entries = []
-        with open(self.log_file) as f:
-            for line in f:
-                entries.append(json.loads(line.strip()))
-
-        if not entries:
-            return {
-                "total_queries": 0,
-                "total_errors": 0,
-                "avg_sources_per_query": 0,
-                "avg_events_per_query": 0,
-                "top_keywords": []
-            }
-
-        # Calculate metrics
-        total_queries = len(entries)
-        total_errors = sum(1 for e in entries if e.get('had_error'))
-
-        total_sources = sum(e.get('num_sources', 0) for e in entries)
-        avg_sources = total_sources / total_queries if total_queries > 0 else 0
-
-        total_events = sum(e.get('num_events', 0) for e in entries)
-        avg_events = total_events / total_queries if total_queries > 0 else 0
-
-        # Count keyword frequencies
-        keyword_counts = {}
-        for entry in entries:
-            for keyword in entry.get('query_keywords', []):
-                keyword_counts[keyword] = keyword_counts.get(keyword, 0) + 1
-
-        # Get top 20 keywords
-        top_keywords = sorted(
-            keyword_counts.items(),
-            key=lambda x: x[1],
-            reverse=True
-        )[:20]
-
-        return {
-            "total_queries": total_queries,
-            "total_errors": total_errors,
-            "error_rate": f"{(total_errors/total_queries*100):.1f}%" if total_queries > 0 else "0%",
-            "avg_sources_per_query": f"{avg_sources:.1f}",
-            "avg_events_per_query": f"{avg_events:.1f}",
-            "top_keywords": top_keywords
-        }

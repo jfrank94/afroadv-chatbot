@@ -50,6 +50,12 @@ DEEPSEEK_API_KEY = get_env("DEEPSEEK_API_KEY")
 ANTHROPIC_API_KEY = get_env("ANTHROPIC_API_KEY")
 TAVILY_API_KEY = get_env("TAVILY_API_KEY")  # For event discovery
 
+# Google Sheets Analytics
+GOOGLE_SERVICE_ACCOUNT_JSON = get_env("GOOGLE_SERVICE_ACCOUNT_JSON")  # JSON string of service account key
+ANALYTICS_SPREADSHEET_NAME = "PoC Platforms Analytics"
+ANALYTICS_QUERIES_SHEET = "queries"
+ANALYTICS_FEEDBACK_SHEET = "feedback"
+
 # Qdrant Cloud Configuration (for production deployment)
 QDRANT_URL = get_env("QDRANT_URL")  # e.g., https://xyz-example.eu-central.aws.cloud.qdrant.io:6333
 QDRANT_API_KEY = get_env("QDRANT_API_KEY")

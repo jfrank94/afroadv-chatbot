@@ -36,3 +36,6 @@ tavily-python==0.7.17  # Web search API for event discovery
 
 # Agentic query routing
 langgraph>=0.2.0,<0.3.0  # LangGraph ReAct agent for complex queries
+
+# Analytics & feedback
+gspread==6.1.2  # Google Sheets integration for analytics and feedback
