@@ -517,41 +517,26 @@ st.markdown("""
         }
     }
 
-    /* Feedback form — compact, borderless */
-    [data-testid="stForm"] {
-        border: none !important;
-        padding: 0.25rem 0 !important;
+    /* Feedback buttons — small, subtle, inline */
+    [data-testid="stHorizontalBlock"] [data-testid="stButton"] > button {
         background: transparent !important;
-        box-shadow: none !important;
-    }
-
-    [data-testid="stForm"] [data-testid="stFormSubmitButton"] > button {
-        background: transparent !important;
-        border: 1px solid rgba(129, 166, 132, 0.4) !important;
+        border: 1px solid rgba(129, 166, 132, 0.35) !important;
         border-radius: 6px !important;
-        padding: 2px 10px !important;
+        padding: 2px 8px !important;
         font-size: 0.85rem !important;
-        color: #5F7A61 !important;
         box-shadow: none !important;
         min-height: 0 !important;
-        height: 2rem !important;
-        transition: border-color 0.2s ease !important;
+        height: 1.8rem !important;
+        line-height: 1 !important;
+        color: #5F7A61 !important;
+        transition: border-color 0.2s ease, background 0.2s ease !important;
     }
 
-    [data-testid="stForm"] [data-testid="stFormSubmitButton"] > button:hover {
+    [data-testid="stHorizontalBlock"] [data-testid="stButton"] > button:hover {
         border-color: #81A684 !important;
         background: rgba(129, 166, 132, 0.08) !important;
         transform: none !important;
         box-shadow: none !important;
-    }
-
-    [data-testid="stForm"] input[type="text"] {
-        font-size: 0.82rem !important;
-        padding: 4px 8px !important;
-        border-radius: 6px !important;
-        border: 1px solid rgba(129, 166, 132, 0.3) !important;
-        background: transparent !important;
-        height: 2rem !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -643,6 +628,57 @@ def display_event_card(event):
         </div>
     </div>
     """, unsafe_allow_html=True)
+
+
+def _render_feedback(idx: int, query: str, feedback_logger):
+    """Render a compact inline feedback widget for a single assistant message.
+
+    Step 1: Show 👍 👎 buttons (no text box).
+    Step 2: On 👎, show a small comment box + submit.
+    Step 3: On submit (or 👍), show a quiet confirmation.
+    """
+    submitted = st.session_state.feedback_submitted.get(idx)
+    awaiting_comment = st.session_state.feedback_awaiting_comment.get(idx, False)
+
+    if submitted:
+        st.caption("✓ Thanks for your feedback!")
+        return
+
+    if awaiting_comment:
+        # Show compact comment box + submit after thumbs down
+        col1, col2 = st.columns([5, 1])
+        with col1:
+            comment = st.text_input(
+                "comment",
+                placeholder="What could be better? (optional)",
+                label_visibility="collapsed",
+                key=f"comment_input_{idx}",
+            )
+        with col2:
+            if st.button("Send", key=f"send_{idx}", use_container_width=True):
+                try:
+                    feedback_logger.log_feedback(rating="👎", query=query, comment=comment)
+                except Exception as e:
+                    logger.warning(f"Feedback logging failed: {e}")
+                st.session_state.feedback_submitted[idx] = "👎"
+                del st.session_state.feedback_awaiting_comment[idx]
+                st.rerun()
+        return
+
+    # Default: just the two thumb buttons, flush and minimal
+    col1, col2, col3 = st.columns([1, 1, 10])
+    with col1:
+        if st.button("👍", key=f"up_{idx}"):
+            try:
+                feedback_logger.log_feedback(rating="👍", query=query)
+            except Exception as e:
+                logger.warning(f"Feedback logging failed: {e}")
+            st.session_state.feedback_submitted[idx] = "👍"
+            st.rerun()
+    with col2:
+        if st.button("👎", key=f"down_{idx}"):
+            st.session_state.feedback_awaiting_comment[idx] = True
+            st.rerun()
 
 
 def main():
@@ -746,7 +782,9 @@ def main():
     if "messages" not in st.session_state:
         st.session_state.messages = []
     if "feedback_submitted" not in st.session_state:
-        st.session_state.feedback_submitted = {}  # {message_index: True}
+        st.session_state.feedback_submitted = {}  # {message_index: "👍"|"👎"}
+    if "feedback_awaiting_comment" not in st.session_state:
+        st.session_state.feedback_awaiting_comment = {}  # {message_index: True}
 
     feedback_logger = initialize_feedback_logger()
 
@@ -792,43 +830,12 @@ def main():
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-        # Show feedback widget below each assistant message (not user messages)
+        # Show feedback widget below each assistant message
         if message["role"] == "assistant":
             query_for_feedback = ""
-            # Find the preceding user message for context
             if idx > 0 and st.session_state.messages[idx - 1]["role"] == "user":
                 query_for_feedback = st.session_state.messages[idx - 1]["content"]
-
-            already_submitted = st.session_state.feedback_submitted.get(idx, False)
-
-            if already_submitted:
-                st.caption("✓ Thanks for your feedback!")
-            else:
-                with st.form(key=f"feedback_form_{idx}", clear_on_submit=True):
-                    cols = st.columns([1, 1, 8])
-                    with cols[0]:
-                        thumbs_up = st.form_submit_button("👍")
-                    with cols[1]:
-                        thumbs_down = st.form_submit_button("👎")
-                    comment = st.text_input(
-                        "What would you improve or want to see? (optional)",
-                        key=f"comment_{idx}",
-                        label_visibility="collapsed",
-                        placeholder="What would you improve or want to see? (optional)",
-                    )
-
-                    if thumbs_up or thumbs_down:
-                        rating = "👍" if thumbs_up else "👎"
-                        try:
-                            feedback_logger.log_feedback(
-                                rating=rating,
-                                query=query_for_feedback,
-                                comment=comment,
-                            )
-                        except Exception as e:
-                            logger.warning(f"Feedback logging failed: {e}")
-                        st.session_state.feedback_submitted[idx] = True
-                        st.rerun()
+            _render_feedback(idx, query_for_feedback, feedback_logger)
 
     # Chat input
     if prompt := st.chat_input("Ask about PoC platforms..."):
@@ -859,32 +866,9 @@ def main():
                 "events": result.get("events", [])
             })
 
-        # Show feedback form for the response we just added
+        # Show feedback widget for the response we just added
         new_msg_idx = len(st.session_state.messages) - 1
-        with st.form(key=f"feedback_form_{new_msg_idx}", clear_on_submit=True):
-            cols = st.columns([1, 1, 8])
-            with cols[0]:
-                thumbs_up = st.form_submit_button("👍")
-            with cols[1]:
-                thumbs_down = st.form_submit_button("👎")
-            comment = st.text_input(
-                "What would you improve or want to see? (optional)",
-                key=f"comment_{new_msg_idx}",
-                label_visibility="collapsed",
-                placeholder="What would you improve or want to see? (optional)",
-            )
-            if thumbs_up or thumbs_down:
-                rating = "👍" if thumbs_up else "👎"
-                try:
-                    feedback_logger.log_feedback(
-                        rating=rating,
-                        query=prompt,
-                        comment=comment,
-                    )
-                except Exception as e:
-                    logger.warning(f"Feedback logging failed: {e}")
-                st.session_state.feedback_submitted[new_msg_idx] = True
-                st.rerun()
+        _render_feedback(new_msg_idx, prompt, feedback_logger)
 
     # Footer
     st.divider()
