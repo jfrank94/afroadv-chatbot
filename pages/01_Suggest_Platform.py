@@ -218,12 +218,10 @@ with st.expander("📋 Submission Guidelines"):
     ❌ **Don't submit:**
     - Individual social media accounts (unless official org presence)
     - Inactive or defunct organizations
-    - Platforms not focused on PoC communities
     - Duplicate submissions
 
     **Review process:**
-    1. Submissions are reviewed by our team
+    1. Submissions are reviewed 
     2. We verify the platform is active and legitimate
     3. Approved platforms are added to the database within 1-2 weeks
-    4. You'll receive an email update if you provided your email
     """)
