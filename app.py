@@ -516,6 +516,43 @@ st.markdown("""
             transition-duration: 0.01ms !important;
         }
     }
+
+    /* Feedback form — compact, borderless */
+    [data-testid="stForm"] {
+        border: none !important;
+        padding: 0.25rem 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    [data-testid="stForm"] [data-testid="stFormSubmitButton"] > button {
+        background: transparent !important;
+        border: 1px solid rgba(129, 166, 132, 0.4) !important;
+        border-radius: 6px !important;
+        padding: 2px 10px !important;
+        font-size: 0.85rem !important;
+        color: #5F7A61 !important;
+        box-shadow: none !important;
+        min-height: 0 !important;
+        height: 2rem !important;
+        transition: border-color 0.2s ease !important;
+    }
+
+    [data-testid="stForm"] [data-testid="stFormSubmitButton"] > button:hover {
+        border-color: #81A684 !important;
+        background: rgba(129, 166, 132, 0.08) !important;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
+    [data-testid="stForm"] input[type="text"] {
+        font-size: 0.82rem !important;
+        padding: 4px 8px !important;
+        border-radius: 6px !important;
+        border: 1px solid rgba(129, 166, 132, 0.3) !important;
+        background: transparent !important;
+        height: 2rem !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
